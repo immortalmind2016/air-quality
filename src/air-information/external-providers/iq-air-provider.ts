@@ -5,11 +5,7 @@ import axios from 'axios';
 export class  IQAirProvider implements AirInformationProvider{
 
     private apiKey:string;
-    private GeoInformation:GeoInformation;
 
-    setGeoInformation(GeoInformation:GeoInformation){
-        this.GeoInformation = GeoInformation;
-    }
     setApiKey(apiKey:string){
       this.apiKey=apiKey;
     }
