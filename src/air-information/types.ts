@@ -3,6 +3,12 @@ import { AirPollutionGeoInfoDTO } from "./dto/air-information.dto";
 export interface PollutionData {
   [keyof: string]: string | number;
 }
+
+export interface AirPollutionResult{
+  Result:{
+    pollution:{[keyof: string]: string | number}
+  }
+}
 export interface GeoInformation {
   lat:number;
   lon:number;

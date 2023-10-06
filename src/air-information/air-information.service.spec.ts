@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from '@nestjs/config';
 
 import { AirInformationService } from './air-information-service';
-import { IQAirProvider } from './external-providers/iq-air-provider';
+import { AirInformationProviderEnum } from './types';
 
 
 describe('ExternalIntegrationService', () => {
@@ -38,8 +38,7 @@ describe('ExternalIntegrationService', () => {
 
   
   it("tests the integration with API of IQAIR and should return the pollution data",async ()=>{
-    let _IQAirProvider=new IQAirProvider()
-    service.setProvider(_IQAirProvider)
+    service.createProvider(AirInformationProviderEnum.IQAirProvider)
     const {Result:{pollution}}=await service.getNearestCityPopulation({lat:31.00192,lon:  30.78847})||{};
     expect(pollution).toBeDefined();
     expect(pollution.aqius).toBeDefined();

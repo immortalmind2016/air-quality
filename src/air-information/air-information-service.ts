@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { AirInformationProvider, AirInformationProviderEnum, PollutionData } from './types';
+import { AirInformationProvider, AirInformationProviderEnum, AirPollutionResult, PollutionData } from './types';
 import {  AirPollutionGeoInfoDTO } from './dto/air-information.dto';
 import { IQAirProvider } from './external-providers/iq-air-provider';
 
@@ -11,7 +11,8 @@ export class AirInformationService {
   
   private provider: AirInformationProvider;
 
-   createProvider (providerName: AirInformationProviderEnum) {
+  //TODO: will make it private once we have a discriminator key in the input.
+  createProvider (providerName: AirInformationProviderEnum) {
     switch (providerName) {
       case AirInformationProviderEnum.IQAirProvider:
         const _IQAirProvider=new IQAirProvider()
@@ -22,11 +23,11 @@ export class AirInformationService {
     }
   }
 
-  setProvider(provider: AirInformationProvider) {
+  private setProvider(provider: AirInformationProvider) {
     this.provider = provider;
   }
 
-  async getNearestCityPopulation(geoInfo:AirPollutionGeoInfoDTO): Promise<{Result:{pollution:PollutionData}}> {
+  async getNearestCityPopulation(geoInfo:AirPollutionGeoInfoDTO): Promise<AirPollutionResult> {
 
     this.logger.log(`get nearest city population for ${JSON.stringify(geoInfo)}`)
 
