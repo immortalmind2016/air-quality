@@ -26,5 +26,11 @@ describe('AirInformationController', () => {
     const response=await controller.getPollution({lat:31.00192,lon:  30.78847});
     expect(response).toBeDefined();
     expect(response?.Result?.pollution).toHaveProperty("aqius");
+    expect(response?.Result?.pollution).toHaveProperty("aqicn");
+    expect(response?.Result?.pollution).toHaveProperty("mainus");
+    expect(response?.Result?.pollution).toHaveProperty("maincn");
+    expect(response?.Result?.pollution).toHaveProperty("ts");
+
+
   })
 });

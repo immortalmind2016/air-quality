@@ -41,10 +41,12 @@ describe('ExternalIntegrationService', () => {
     service.createProvider(AirInformationProviderEnum.IQAirProvider)
     const {Result:{pollution}}=await service.getNearestCityPopulation({lat:31.00192,lon:  30.78847})||{};
     expect(pollution).toBeDefined();
-    expect(pollution.aqius).toBeDefined();
-    expect(pollution.aqicn).toBeDefined();
-    expect(pollution.mainus).toBeDefined();
-    expect(pollution.maincn).toBeDefined();
+    expect(pollution).toHaveProperty("aqius");
+    expect(pollution).toHaveProperty("aqicn");
+    expect(pollution).toHaveProperty("mainus");
+    expect(pollution).toHaveProperty("maincn");
+    expect(pollution).toHaveProperty("ts");
+
   }
   )
 
