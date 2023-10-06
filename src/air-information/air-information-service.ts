@@ -16,7 +16,6 @@ export class AirInformationService {
       case AirInformationProviderEnum.IQAirProvider:
         const _IQAirProvider=new IQAirProvider()
         _IQAirProvider.setApiKey(process.env.IQ_AIR_API_KEY);
-        this.setProvider(_IQAirProvider);
         return _IQAirProvider
       default:
         throw new Error('Invalid provider name');
@@ -29,6 +28,7 @@ export class AirInformationService {
 
   async getNearestCityPopulation(geoInfo:AirPollutionGeoInfoDTO): Promise<{Result:{pollution:PollutionData}}> {
 
+    this.logger.log(`get nearest city population for ${JSON.stringify(geoInfo)}`)
 
     // Base on a discriminator, we can use different providers
     // to get the air pollution data

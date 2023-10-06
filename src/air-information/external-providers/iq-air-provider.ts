@@ -17,6 +17,7 @@ export class  IQAirProvider implements AirInformationProvider{
     async getNearestCityPollution(geoInfo:AirPollutionGeoInfoDTO):Promise<PollutionData>{
 
       if(!geoInfo){
+
         throw new Error("GeoInformation is not set");
       }
       if(!this.apiKey){
