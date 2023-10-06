@@ -1,3 +1,4 @@
+import { AirPollutionGeoInfoDTO } from "../dto/air-information.dto";
 import { AirInformationProvider, GeoInformation, PollutionData } from "../types";
 import axios from 'axios';
 
@@ -13,9 +14,9 @@ export class  IQAirProvider implements AirInformationProvider{
       this.apiKey=apiKey;
     }
 
-    async getNearestCityPollution():Promise<PollutionData>{
+    async getNearestCityPollution(geoInfo:AirPollutionGeoInfoDTO):Promise<PollutionData>{
 
-      if(!this.GeoInformation){
+      if(!geoInfo){
         throw new Error("GeoInformation is not set");
       }
       if(!this.apiKey){
@@ -23,8 +24,8 @@ export class  IQAirProvider implements AirInformationProvider{
       }
       try{
         const response=await axios.get(`${process.env.IQ_AIR_ENDPOINT}/nearest_city`,{params:{
-          lat:this.GeoInformation.lat,
-          lon:this.GeoInformation.lon,
+          lat:geoInfo.lat,
+          lon:geoInfo.lon,
           key:this.apiKey
         }}
         );

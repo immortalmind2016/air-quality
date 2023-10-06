@@ -39,11 +39,8 @@ describe('ExternalIntegrationService', () => {
   
   it("tests the integration with API of IQAIR and should return the pollution data",async ()=>{
     let _IQAirProvider=new IQAirProvider()
-    _IQAirProvider.setApiKey(process.env.IQ_AIR_API_KEY)
-    _IQAirProvider.setGeoInformation({lat:31.00192,lon:  30.78847});
-
     service.setProvider(_IQAirProvider)
-    const {Result:{pollution}}=await service.getNearestCityPopulation()||{};
+    const {Result:{pollution}}=await service.getNearestCityPopulation({lat:31.00192,lon:  30.78847})||{};
     expect(pollution).toBeDefined();
     expect(pollution.aqius).toBeDefined();
     expect(pollution.aqicn).toBeDefined();
