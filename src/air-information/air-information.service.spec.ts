@@ -25,6 +25,7 @@ describe('ExternalIntegrationService', () => {
 
     service = module.get<AirInformationService>(
       AirInformationService,
+  
     );
 
   });

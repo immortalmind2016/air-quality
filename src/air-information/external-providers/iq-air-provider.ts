@@ -1,9 +1,9 @@
-import { ApiException } from "src/common/exceptions/api-key-exception";
+import { ApiException } from "../../common/exceptions/api-key-exception";
 import { AirPollutionGeoInfoDTO } from "../dto/air-information.dto";
 import { AirInformationProvider, GeoInformation, PollutionData } from "../types";
 import axios from 'axios';
 import { BadRequestException, Logger } from "@nestjs/common";
-import { ExternalCallException } from "src/common/exceptions/external-call-exception";
+import { ExternalCallException } from "../../common/exceptions/external-call-exception";
 
 export class  IQAirProvider implements AirInformationProvider{
 
