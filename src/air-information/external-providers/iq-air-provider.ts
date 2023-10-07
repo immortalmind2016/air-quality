@@ -1,9 +1,13 @@
+import { ApiException } from "src/common/exceptions/api-key-exception";
 import { AirPollutionGeoInfoDTO } from "../dto/air-information.dto";
 import { AirInformationProvider, GeoInformation, PollutionData } from "../types";
 import axios from 'axios';
+import { BadRequestException, Logger } from "@nestjs/common";
+import { ExternalCallException } from "src/common/exceptions/external-call-exception";
 
 export class  IQAirProvider implements AirInformationProvider{
 
+    private readonly logger=new Logger(IQAirProvider.name)
     private apiKey:string;
 
     setApiKey(apiKey:string){
@@ -13,13 +17,16 @@ export class  IQAirProvider implements AirInformationProvider{
     async getNearestCityPollution(geoInfo:AirPollutionGeoInfoDTO):Promise<PollutionData>{
 
       if(!geoInfo){
-
-        throw new Error("GeoInformation is not set");
+        this.logger.warn("GeoInformation is not set")
+        throw new BadRequestException("GeoInformation is not set");
       }
       if(!this.apiKey){
-        throw new Error("Api key is not set");
+        this.logger.warn("Api key is not set")
+        throw new ApiException("Api key is not set");
       }
+
       try{
+        this.logger.log("Getting nearest city pollution")
         const response=await axios.get(`${process.env.IQ_AIR_ENDPOINT}/nearest_city`,{params:{
           lat:geoInfo.lat,
           lon:geoInfo.lon,
@@ -28,8 +35,10 @@ export class  IQAirProvider implements AirInformationProvider{
         );
         return response.data?.data?.current?.pollution
       }catch(e){
+        this.logger.warn(e.message)
+        throw new ExternalCallException("something went wrong while you are requesting an external APIs")
       }
       
-      return null
+    
     }
   }
