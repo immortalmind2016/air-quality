@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 
 import { AirInformationService } from './air-information-service';
-import { AirInformationController } from './air-information.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Pollution, PollutionSchema } from './schema/pollution.schema';
+import { AirInformationInternalController } from './controller/air-information.internal.controller';
+import { AirInformationController } from './controller/air-information.controller';
 
 
 @Module({
@@ -16,9 +17,10 @@ import { Pollution, PollutionSchema } from './schema/pollution.schema';
       envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env.dev',
     }
   ),
+  MongooseModule.forFeature([{name:Pollution.name,schema:PollutionSchema}]),
   MongooseModule.forRootAsync({
     inject:[ConfigService],
-    imports:[ConfigModule,MongooseModule.forFeature([{name:Pollution.name,schema:PollutionSchema}])],
+    imports:[ConfigModule],
     useFactory:(configService:ConfigService)=>{
       return {
         uri:configService.get("MONGO_URI")
@@ -28,7 +30,7 @@ import { Pollution, PollutionSchema } from './schema/pollution.schema';
   })
 ],
   exports:[AirInformationService],
-  controllers: [AirInformationController]
+  controllers: [AirInformationController, AirInformationInternalController]
 
 })
 

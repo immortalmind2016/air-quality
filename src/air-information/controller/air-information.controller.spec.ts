@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AirInformationController } from './air-information.controller';
-import { AirInformationService } from './air-information-service';
+import { AirInformationService } from '../air-information-service';
 import { ConfigModule } from '@nestjs/config';
 
 describe('AirInformationController', () => {

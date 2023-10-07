@@ -3,6 +3,16 @@ import { HydratedDocument } from 'mongoose';
 
 export type PollutionDocument = HydratedDocument<Pollution>;
 
+// We can make it as a geo point but to avoid complexity for this simple task let's keep it as it.
+@Schema({_id:false})
+class GeoInfo{
+  @Prop()
+  lat:number;
+
+  @Prop()
+  lon:number
+}
+
 @Schema({
   timestamps:true
 })
@@ -12,16 +22,19 @@ export class Pollution {
   "ts":Date
 
   @Prop({index:true}) 
-  "aqius": Number  //main pollutant for US AQI
+  aqius: Number  //main pollutant for US AQI
 
   @Prop()
-  "mainus": String 
+  mainus: String 
 
   @Prop()
-  "aqicn": number //main pollutant for Chinese AQI
+  aqicn: number //main pollutant for Chinese AQI
 
   @Prop()
-  "maincn":String
+  maincn:String
+
+  @Prop()
+  geoInfo:GeoInfo
 
 
 }

@@ -1,15 +1,20 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { AirInformationProvider, AirInformationProviderEnum, AirPollutionResult, PollutionData } from './types';
+import { AirInformationProvider, AirInformationProviderEnum, AirPollutionResult, PollutionInfo } from './types';
 import {  AirPollutionGeoInfoDTO } from './dto/air-information.dto';
 import { IQAirProvider } from './external-providers/iq-air-provider';
+import { InjectModel } from '@nestjs/mongoose';
+import { Pollution } from './schema/pollution.schema';
+import { Model } from 'mongoose';
 
 
 @Injectable()
 export class AirInformationService {
-  private logger = new Logger(AirInformationService.name);
-
   
+  private logger = new Logger(AirInformationService.name);
   private provider: AirInformationProvider;
+
+
+  constructor(@InjectModel(Pollution.name) private pollutionModel:Model<Pollution>){}
 
   //TODO: will make it private once we have a discriminator key in the input.
   createProvider (providerName: AirInformationProviderEnum) {
@@ -45,4 +50,9 @@ export class AirInformationService {
       }
     }
   }
+  
+  async storeGeoPollution(geoInfo:AirPollutionGeoInfoDTO,info:PollutionInfo){
+    return this.pollutionModel.create({geoInfo:geoInfo,...info})
+  }
+
 }

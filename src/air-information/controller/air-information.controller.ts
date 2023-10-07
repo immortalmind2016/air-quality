@@ -1,9 +1,7 @@
 import { BadRequestException, Body, Controller, Get, Logger } from '@nestjs/common';
-import { AirInformationService } from './air-information-service';
-import { AirPollutionGeoInfoDTO } from './dto/air-information.dto';
-import { AirPollutionResult } from './types';
-import { ApiException } from 'src/common/exceptions/api-key-exception';
-import { ExternalCallException } from 'src/common/exceptions/external-call-exception';
+import { AirInformationService } from '../air-information-service';
+import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
+import { AirPollutionResult } from '../types';
 
 @Controller('air-information')
 export class AirInformationController {
