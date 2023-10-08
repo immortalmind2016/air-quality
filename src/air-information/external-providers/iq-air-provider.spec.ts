@@ -44,13 +44,16 @@ describe('IQAirProvider', () => {
     expect(pollutionData.ts).toBe('2017-02-01T01:15:00.000Z');
 
     // Verify Axios.get was called with the expected URL and parameters
-    expect(axios.get).toHaveBeenCalledWith(`${process.env.IQ_AIR_ENDPOINT}/nearest_city`, {
-      params: {
-        lat: geoInfo.lat,
-        lon: geoInfo.lon,
-        key: 'your-api-key',
+    expect(axios.get).toHaveBeenCalledWith(
+      `${process.env.IQ_AIR_ENDPOINT}/nearest_city`,
+      {
+        params: {
+          lat: geoInfo.lat,
+          lon: geoInfo.lon,
+          key: 'your-api-key',
+        },
       },
-    });
+    );
   });
 
   it('should throw an error if geoInfo is not set', async () => {

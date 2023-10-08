@@ -1,10 +1,9 @@
-import { IsLatitude, IsLongitude } from "class-validator";
+import { IsLatitude, IsLongitude } from 'class-validator';
 
-export class AirPollutionGeoInfoDTO{
+export class AirPollutionGeoInfoDTO {
+  @IsLatitude()
+  lat: number;
 
-    @IsLatitude()
-    lat: number;
-
-    @IsLongitude()
-    lon: number;
+  @IsLongitude()
+  lon: number;
 }

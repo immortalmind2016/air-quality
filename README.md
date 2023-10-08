@@ -100,6 +100,9 @@ So You can create new air information provider by following these steps:
 - Just check the swagger documentation at ```http://localhost:3000/api```
 
 
+## Pre commit 
+- We are using husky to run the tests before commiting the code
+
 ## What next?
 - Add a discriminator field to the AirInformation entity in order to distinguish between different providers.
 - Add a new field to the pollution entity to store the provider name.

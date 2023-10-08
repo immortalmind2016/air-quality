@@ -1,7 +1,7 @@
-import { BadGatewayException, HttpException, HttpStatus } from '@nestjs/common';
+import { BadGatewayException } from '@nestjs/common';
 
 export class ExternalCallException extends BadGatewayException {
-    constructor(message:string) {
-        super(message);
+  constructor(message: string) {
+    super(message);
   }
 }

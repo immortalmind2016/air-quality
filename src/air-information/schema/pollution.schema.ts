@@ -4,43 +4,40 @@ import { HydratedDocument } from 'mongoose';
 export type PollutionDocument = HydratedDocument<Pollution>;
 
 // We can make it as a geo point but to avoid complexity for this simple task let's keep it as it.
-@Schema({_id:false})
-class GeoInfo{
+@Schema({ _id: false })
+class GeoInfo {
   @Prop()
-  lat:number;
+  lat: number;
 
   @Prop()
-  lon:number
+  lon: number;
 }
 
 @Schema({
-  timestamps:true
+  timestamps: true,
 })
 export class Pollution {
+  @Prop()
+  'ts': Date;
+
+  @Prop({ index: true })
+  aqius: number; //main pollutant for US AQI
 
   @Prop()
-  "ts":Date
-
-  @Prop({index:true}) 
-  aqius: Number  //main pollutant for US AQI
+  mainus: string;
 
   @Prop()
-  mainus: String 
+  aqicn: number; //main pollutant for Chinese AQI
 
   @Prop()
-  aqicn: number //main pollutant for Chinese AQI
+  maincn: string;
 
   @Prop()
-  maincn:String
+  geoInfo: GeoInfo;
 
-  @Prop()
-  geoInfo:GeoInfo
+  createdAt: Date;
 
-  createdAt:Date
-
-  updatedAt:Date
-
-
+  updatedAt: Date;
 }
 
 export const PollutionSchema = SchemaFactory.createForClass(Pollution);

@@ -1,25 +1,25 @@
 import { Controller, Post } from '@nestjs/common';
 import { AirInformationService } from '../air-information-service';
-import { ApiExcludeController, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController } from '@nestjs/swagger';
 // paris zone geo info
-const GEO_INFO={
-    lat:31.00192,
-    lon:30.78847
-}
+const GEO_INFO = {
+  lat: 31.00192,
+  lon: 30.78847,
+};
 
 // We can use this controller in order to have internal calls (e.g. call an endpoint from kubernetes cronjob)
 @Controller('air-information.internal')
 @ApiExcludeController()
 export class AirInformationInternalController {
+  constructor(private readonly airInfoService: AirInformationService) {}
 
-    constructor(private readonly airInfoService:AirInformationService){}
-
-    // Being invoked internally by kubernetes cronjob every x minutes
-    // So we won't add it to the swagger documentation
-    @Post("execute-air-info-job")
-    async executeAirInfoJob(){
-        const response= await this.airInfoService.getNearestCityPopulation(GEO_INFO);
-        const pollution=response.Result.pollution
-        return this.airInfoService.storeGeoPollution(GEO_INFO,pollution)
-    }
+  // Being invoked internally by kubernetes cronjob every x minutes
+  // So we won't add it to the swagger documentation
+  @Post('execute-air-info-job')
+  async executeAirInfoJob() {
+    const response =
+      await this.airInfoService.getNearestCityPopulation(GEO_INFO);
+    const pollution = response.Result.pollution;
+    return this.airInfoService.storeGeoPollution(GEO_INFO, pollution);
+  }
 }
