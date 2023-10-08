@@ -130,11 +130,15 @@ So You can create new air information provider by following these steps:
 
 
 ## Pre commit 
-- We are using husky to run the tests before commiting the code
+- We are using husky to run the linting before commiting the code
 
 
 ## Database
 - We have created a db cluster in MongoDB Atlas instead of doing it locally and spin up a docker container for the database, Just for the sake of simplicity.
+
+## CI/CD 
+- We are using github actions to run the tests and build the docker image and push it to the registry
+
 
 ## What next?
 - Add a discriminator field to the AirInformation entity in order to distinguish between different providers.
