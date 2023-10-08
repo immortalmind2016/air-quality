@@ -12,7 +12,8 @@ export class AirInformationInternalController {
 
     constructor(private readonly airInfoService:AirInformationService){}
 
-    // Being invoked by kubernetes cronjob every x minutes
+    // Being invoked internally by kubernetes cronjob every x minutes
+    // So we won't add it to the swagger documentation
     @Post("execute-air-info-job")
     async executeAirInfoJob(){
         const response= await this.airInfoService.getNearestCityPopulation(GEO_INFO);
