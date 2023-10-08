@@ -141,6 +141,7 @@ So You can create new air information provider by following these steps:
 - Add a new field to the pollution entity to store the provider name.
 - Using bull queue based on redis to handle the cron jobs.
 - Create kubernetes deployment file for the application.
+- Adding hash for each docker image based on the git commit hash [useful in rollback].
 
 
 
