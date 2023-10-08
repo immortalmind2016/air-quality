@@ -107,7 +107,8 @@ So You can create new air information provider by following these steps:
 ## Cron job
 - We are using cron job to update the air information every 1 minute
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file
-- To run the cron job, you can run the command ```yarn run:job```
+- To run the cron job directly, you can run the command ```yarn run:job```
+- To run the cron job in kubernetes, you can run the command ```yarn k8s:apply```
 ### We have 2 approaches for the cron job:
 #### 1- Using internal cron jobs (using node-cron module) ```/src/air-information/jobs/get-air-info.ts```  [Implemented]
 #### 2- Using kubernetes cron jobs, To invoke the script  ```/src/air-information/jobs/get-air-info-v2.ts``` every 1 minute [implemented]
