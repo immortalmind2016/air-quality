@@ -35,6 +35,7 @@ export class  IQAirProvider implements AirInformationProvider{
         );
         return response.data?.data?.current?.pollution
       }catch(e){
+      
         this.logger.warn(e.message)
         throw new ExternalCallException("something went wrong while you are requesting an external APIs")
       }
