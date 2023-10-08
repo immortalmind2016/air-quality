@@ -36,4 +36,28 @@ export class AirInformationController {
             throw new Error(e.message);
         }
     }
+
+    @Get("most-polluted-date")
+    @ApiOperation({ summary: 'Get the most polluted date' })
+    @ApiQuery({ name: 'lat', type: Number,required:false, description: 'Latitude' })
+    @ApiQuery({ name: 'lon', type: Number,required:false, description: 'Longitude' })
+    @ApiResponse({
+        status: 200,
+        description: 'Successful response',
+        type: Promise<Date>,
+    })
+    async getMostPollutedDate(@Query("lat") lat?:number, @Query("lon") lon?:number): Promise<Date> {
+
+        // default is paris zone
+        let geoInfo:GeoInformation={
+            lat:lat?lat:31.00192,
+            lon:lon?lon:30.78847
+        }
+        try{
+            return this.airInformationService.getMostPollutedDate(geoInfo);
+        }catch(e){
+            this.logger.warn(e.message)
+            throw new Error(e.message);
+        }
+    }
 }

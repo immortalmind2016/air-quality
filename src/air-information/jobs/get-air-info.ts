@@ -1,14 +1,15 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "../../app.module";
 import { AirInformationService } from "../air-information-service";
-import cron from "node-cron"
+import * as cron from "node-cron"
 import { Logger } from "@nestjs/common";
 
 
 const GEO_INFO={
-lat:48.856613,
-lon:2.352222
+    lat:31.00192,
+    lon:30.78847
 }
+
 
 const logger=new Logger("getAirInfo cron-job")
 

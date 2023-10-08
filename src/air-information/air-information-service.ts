@@ -58,8 +58,9 @@ export class AirInformationService {
 
   async getMostPollutedDate(geoInfo:AirPollutionGeoInfoDTO){
     this.logger.log(`get most polluted date for ${JSON.stringify(geoInfo)}`)
+    console.log(await this.pollutionModel.findOne({geoInfo}).sort({aqius:-1}))
     // -1 for DESC order
-    return (await this.pollutionModel.findOne({geoInfo}).sort({aqius:-1}).lean())?.createdAt;
+    return (await this.pollutionModel.findOne({"geoInfo.lat":geoInfo.lat,"geoInfo.lon":geoInfo.lon}).sort({aqius:-1}).lean())?.createdAt;
   }
 
 }
