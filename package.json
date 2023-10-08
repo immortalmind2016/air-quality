@@ -19,7 +19,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
-    "run:job":"ts-node ./src/air-information/jobs/get-air-information.job.ts"
+    "run:job":"ts-node ./src/air-information/jobs/get-air-information.job.ts",
+    "k8s:apply":"bash ./scripts/apply-cronjob-deployment.sh",
+    "docker:deploy":"bash ./scripts/deploy-docker-image.sh",
+    "docker:start":"bash ./scripts/start-docker-image.sh"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

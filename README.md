@@ -2,6 +2,15 @@
 
 The goal of this project is to create a REST API responsible for exposing “the air
 quality information” of a nearest city to GPS coordinates using iqair
+
+
+## Requirements
+- Nodejs
+- Yarn
+- Docker [optional]
+- Enable Kubernetes in docker [optional]
+- Change kubectl context to docker-desktop [optional] ```bash kubectl config use-context docker-desktop```
+
 ## Installation
 
 ```bash
@@ -21,10 +30,10 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Runnin the app using Docker
+## Running the app using Docker
 - We have created a docker file to containerize our application
-- using command ```docker build -t air-information .``` to build the image
-- using command ```docker run -p 3000:3000 air-information``` to run the container
+- using command ```yarn docker:start``` to build the image
+- deploying our docker image to the registry ```yarn docker:deploy``` [Optional]
 
 
 ## Test
@@ -107,7 +116,9 @@ So You can create new air information provider by following these steps:
 #### we are using kubernetes to deploy our cron job
 - We have created a cron job in kubernetes to invoke the script ```/src/air-information/jobs/get-air-info-v2.ts``` every 1 minute
 #### How to run the cron job in kubernetes
-- You can run the cron job by running the command ```kubectl apply -f ./deployment/cronjobs/air-info-cronjob.yml```
+##### we have two options
+- You can run the cron job by running the command ```kubectl apply -f ./deployment/cronjobs/air-info-cronjob.yml``` [Native]
+- Using ```yarn k8s:apply``` [Using yarn script]
 
 ### Deployments
 - inside the `deployments` folder
