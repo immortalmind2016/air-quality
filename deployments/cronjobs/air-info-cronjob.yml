@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: air-app-cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: air-app-cronjob-container
+              image: immortalmind/air-app:latest
+              command: [ "node", "./dist/air-information/jobs/get-air-info-v2.js" ] # Replace with the actual script to invoke your endpoint
+          restartPolicy: OnFailure
+  startingDeadlineSeconds: 30

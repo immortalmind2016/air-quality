@@ -11,7 +11,7 @@ const GEO_INFO = {
 
 const logger = new Logger('getAirInfo cron-job');
 
-const getAirInfo = async () => {
+export const getAirInfo = async () => {
   logger.log('Running the cron job of getting air info');
   const app = await NestFactory.createApplicationContext(AppModule); // Pass your AppModule here
   const AirInfoService = app.get(AirInformationService);

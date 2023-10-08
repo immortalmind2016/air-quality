@@ -89,7 +89,7 @@ So You can create new air information provider by following these steps:
 ## Controllers
 - We have 2 controllers:
 #### 1- AirInformationController: responsible for exposing the air information to the client/external consumer
-#### 2- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job in kubernetes)
+#### 2- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job) [ NOT USED FOR NOW ]
 
 ## Data transfer objects (DTOs)
 - We have 1 DTO: 
@@ -100,8 +100,18 @@ So You can create new air information provider by following these steps:
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file
 - To run the cron job, you can run the command ```yarn run:job```
 ### We have 2 approaches for the cron job:
-#### 1- Using internal cron jobs (using node-cron module)
-#### 2- Using kubernetes cron jobs, To invoke the endpoint called ```/air-information.internal/execute-air-info-job```
+#### 1- Using internal cron jobs (using node-cron module) ```/src/air-information/jobs/get-air-info.ts```  [Implemented]
+#### 2- Using kubernetes cron jobs, To invoke the script  ```/src/air-information/jobs/get-air-info-v2.ts``` every 1 minute [implemented]
+
+## Kubernetes
+#### we are using kubernetes to deploy our cron job
+- We have created a cron job in kubernetes to invoke the script ```/src/air-information/jobs/get-air-info-v2.ts``` every 1 minute
+#### How to run the cron job in kubernetes
+- You can run the cron job by running the command ```kubectl apply -f ./deployment/cronjobs/air-info-cronjob.yml```
+
+### Deployments
+- inside the `deployments` folder
+
 
 ## How to use the API
 - Just check the swagger documentation at ```http://localhost:3000/api```
@@ -117,5 +127,9 @@ So You can create new air information provider by following these steps:
 ## What next?
 - Add a discriminator field to the AirInformation entity in order to distinguish between different providers.
 - Add a new field to the pollution entity to store the provider name.
+- Using bull queue based on redis to handle the cron jobs.
+- Create kubernetes deployment file for the application.
+
+
 
 

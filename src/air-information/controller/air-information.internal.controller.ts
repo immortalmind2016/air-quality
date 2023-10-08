@@ -8,7 +8,7 @@ const GEO_INFO = {
 };
 
 // We can use this controller in order to have internal calls (e.g. call an endpoint from kubernetes cronjob)
-@Controller('air-information.internal')
+@Controller('air-information-internal')
 @ApiExcludeController()
 export class AirInformationInternalController {
   constructor(private readonly airInfoService: AirInformationService) {}
