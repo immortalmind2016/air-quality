@@ -36,6 +36,10 @@ export class Pollution {
   @Prop()
   geoInfo:GeoInfo
 
+  createdAt:Date
+
+  updatedAt:Date
+
 
 }
 

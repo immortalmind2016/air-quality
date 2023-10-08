@@ -3,7 +3,7 @@ import axios from 'axios';
 
 jest.mock('axios');
 
-describe.only('IQAirProvider', () => {
+describe('IQAirProvider', () => {
   let iqAirProvider: IQAirProvider;
 
   beforeEach(() => {

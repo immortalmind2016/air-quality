@@ -17,7 +17,7 @@ export class AirInformationService {
   constructor(@InjectModel(Pollution.name) private pollutionModel:Model<Pollution>){}
 
   //TODO: will make it private once we have a discriminator key in the input.
-  createProvider (providerName: AirInformationProviderEnum) {
+  createProviderFactory (providerName: AirInformationProviderEnum) {
     switch (providerName) {
       case AirInformationProviderEnum.IQAirProvider:
         const _IQAirProvider=new IQAirProvider()
@@ -38,7 +38,7 @@ export class AirInformationService {
 
     // Base on a discriminator, we can use different providers
     // to get the air pollution data
-    let provider=this.createProvider(AirInformationProviderEnum.IQAirProvider);
+    let provider=this.createProviderFactory(AirInformationProviderEnum.IQAirProvider);
     this.setProvider(provider);
     // Once we have multiple providers, we are using a factory to get the right provider based on the discriminator.
 
@@ -52,7 +52,14 @@ export class AirInformationService {
   }
   
   async storeGeoPollution(geoInfo:AirPollutionGeoInfoDTO,info:PollutionInfo){
+    this.logger.log(`store geo pollution for ${JSON.stringify(geoInfo)}`)
     return this.pollutionModel.create({geoInfo:geoInfo,...info})
+  }
+
+  async getMostPollutedDate(geoInfo:AirPollutionGeoInfoDTO){
+    this.logger.log(`get most polluted date for ${JSON.stringify(geoInfo)}`)
+    // -1 for DESC order
+    return (await this.pollutionModel.findOne({geoInfo}).sort({aqius:-1}).lean())?.createdAt;
   }
 
 }
