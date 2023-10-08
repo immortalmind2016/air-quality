@@ -60,15 +60,15 @@ $ yarn run test:cov
 │   │   │   ├── iq-air.provider.spec.ts
 │   │   ├── jobs
 │   │   │   ├── get-air-info.ts
-│   │   ├── air-information.controller.spec.ts
-│   │   ├── air-information.service.ts
-│   │   ├── air-information.module.ts
-│   ├── common
-│   ├── app.module.ts
-│   ├── main.ts
-│   ├── app.controller.ts
-│   ├── app.service.ts
-│   ├── app.controller.spec.ts
+│   ├── air-information.controller.spec.ts
+│   ├── air-information.service.ts
+│   ├── air-information.module.ts
+├── common
+├── app.module.ts
+├── main.ts
+├── app.controller.ts
+├── app.service.ts
+├── app.controller.spec.ts
 
 
 ## Create new air information provider
