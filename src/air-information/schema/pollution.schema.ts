@@ -20,19 +20,19 @@ export class Pollution {
   @Prop()
   'ts': Date;
 
-  @Prop({ index: true })
+  @Prop({ index: true, type: Number })
   aqius: number; //main pollutant for US AQI
 
-  @Prop()
+  @Prop({ type: String })
   mainus: string;
 
-  @Prop()
+  @Prop({ type: Number })
   aqicn: number; //main pollutant for Chinese AQI
 
-  @Prop()
+  @Prop({ type: String })
   maincn: string;
 
-  @Prop()
+  @Prop({ type: GeoInfo })
   geoInfo: GeoInfo;
 
   createdAt: Date;

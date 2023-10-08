@@ -21,6 +21,12 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Runnin the app using Docker
+- We have created a docker file to containerize our application
+- using command ```docker build -t air-information .``` to build the image
+- using command ```docker run -p 3000:3000 air-information``` to run the container
+
+
 ## Test
 
 ```bash
@@ -82,8 +88,8 @@ So You can create new air information provider by following these steps:
 
 ## Controllers
 - We have 2 controllers:
-1- AirInformationController: responsible for exposing the air information to the client/external consumer
-2- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job in kubernetes)
+#### 1- AirInformationController: responsible for exposing the air information to the client/external consumer
+#### 2- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job in kubernetes)
 
 ## Data transfer objects (DTOs)
 - We have 1 DTO: 
@@ -94,8 +100,8 @@ So You can create new air information provider by following these steps:
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file
 - To run the cron job, you can run the command ```yarn run:job```
 ### We have 2 approaches for the cron job:
-1- Using internal cron jobs (using node-cron module)
-2- Using kubernetes cron jobs, To invoke the endpoint called ```/air-information.internal/execute-air-info-job```
+#### 1- Using internal cron jobs (using node-cron module)
+#### 2- Using kubernetes cron jobs, To invoke the endpoint called ```/air-information.internal/execute-air-info-job```
 
 ## How to use the API
 - Just check the swagger documentation at ```http://localhost:3000/api```
@@ -107,11 +113,6 @@ So You can create new air information provider by following these steps:
 
 ## Database
 - We have created a db cluster in MongoDB Atlas instead of doing it locally and spin up a docker container for the database, Just for the sake of simplicity.
-
-## Docker
-- We have created a docker file to containerize our application
-- using command ```docker build -t air-information .``` to build the image
-- using command ```docker run -p 3000:3000 air-information``` to run the container
 
 ## What next?
 - Add a discriminator field to the AirInformation entity in order to distinguish between different providers.
