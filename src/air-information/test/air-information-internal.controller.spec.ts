@@ -7,7 +7,7 @@ import { AirInformationService } from '../air-information-service';
 import { AirInformationInternalController } from '../controller/air-information-internal.controller';
 import { BullModule, getQueueToken } from '@nestjs/bull';
 import { Queues } from '../types';
-import { AirInfoQueueConsumer } from '../queue/air-info-queue';
+import { AirInfoQueueConsumer } from '../queue/air-info-queue-consumer';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
 import mongoose from 'mongoose';
 import { Queue } from 'bull';

@@ -20,7 +20,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
     "run:job": "ts-node ./src/air-information/jobs/get-air-info.ts ",
-    "run:status-job": "ts-node ./src/air-information/jobs/check-air-info-provider-status.ts",
     "k8s:apply": "bash ./scripts/apply-cronjob-deployment.sh",
     "docker:deploy": "bash ./scripts/deploy-docker-image.sh",
     "docker:start": "bash ./scripts/start-docker-image.sh",

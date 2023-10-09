@@ -82,7 +82,8 @@ $ yarn run test:cov
 │   │   ├── jobs
 │   │   │   ├── get-air-info.ts
 │   │   │   ├── get-air-info-v2.ts
-│   │   │   ├── check-air-info-provider-status.ts
+│   │   ├── queue
+│   │   │   ├── air-info-queue-consumer.ts
 │   │   ├── test
 │   │   │   ├── air-info-provider-factory.spec.ts
 │   │   │   ├── air-info-service-integration.spec.ts
@@ -134,14 +135,12 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file 
 - To run the cron job directly, you can run the command ```yarn run:job```
 
-#### Checking the status of the air information provider every 30 minutes
-- To run the cron job directly, you can run the command ```yarn run:status-job```
-
-
-
-## Checking status cronjob
+#### Checking the status of the air information provider every 30 minutes [INSIDE PAUSE EVENT HANDLER OF THE QUEUE]
 - It's something like a health check for the external provider to make sure that it's up and running
-- implementation is close to cicuit breaker pattern
+- implementation is close to circuit breaker pattern
+
+
+
 ### the flow
 - Invoke a function to call the external provider.
 - If the external provider is up and running, redis queue will be resumed.
@@ -213,7 +212,6 @@ All files                                |   55.06 |    36.84 |   56.75 |   53.1
   air-info-provider-factory.ts           |     100 |      100 |     100 |     100 | 
   iq-air-provider.ts                     |     100 |      100 |     100 |     100 | 
  src/air-information/jobs                |       0 |        0 |       0 |       0 | 
-  check-air-info-provider-status.ts      |       0 |        0 |       0 |       0 | 1-40
   get-air-info-v2.ts                     |       0 |      100 |     100 |       0 | 2-4
   get-air-info.ts                        |       0 |      100 |       0 |       0 | 1-30
  src/air-information/queue               |   53.57 |        0 |   16.66 |      50 | 

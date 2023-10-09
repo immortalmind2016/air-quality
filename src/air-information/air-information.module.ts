@@ -7,7 +7,7 @@ import { Pollution, PollutionSchema } from './schema/pollution.schema';
 import { AirInformationController } from './controller/air-information.controller';
 import { BullModule } from '@nestjs/bull';
 import { Queues } from './types';
-import { AirInfoQueueConsumer } from './queue/air-info-queue';
+import { AirInfoQueueConsumer } from './queue/air-info-queue-consumer';
 import { AirInformationProviderFactory } from './external-providers/air-info-provider-factory';
 import { AirInformationInternalController } from './controller/air-information-internal.controller';
 
@@ -48,6 +48,10 @@ import { AirInformationInternalController } from './controller/air-information-i
     }),
     BullModule.registerQueue({
       name: Queues.AirInformationQueue,
+      limiter: {
+        max: 1,
+        duration: 60 * 1000,
+      },
     }),
   ],
   exports: [AirInformationService],

@@ -18,7 +18,7 @@ import { Pollution, PollutionSchema } from '../schema/pollution.schema';
 import mongoose, { Connection, Model, connect } from 'mongoose';
 import axios from 'axios';
 import { BullModule, getQueueToken } from '@nestjs/bull';
-import { AirInfoQueueConsumer } from '../queue/air-info-queue';
+import { AirInfoQueueConsumer } from '../queue/air-info-queue-consumer';
 import { AirInformationService } from '../air-information-service';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
 import IORedis from 'ioredis-mock'; // Import ioredis-mock
