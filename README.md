@@ -20,6 +20,10 @@ $ yarn install
 ## Running the app without docker
 
 ```bash
+$ docker-compose up -d
+```
+
+```bash
 # development
 $ yarn run start
 
@@ -32,8 +36,7 @@ $ yarn run start:prod
 
 ## Running the app using Docker and Kubernetes
 - We have created a docker file to containerize our application
-- using command ```yarn docker:start``` to build the image
-- deploying our docker image to the registry ```yarn docker:deploy``` [Optional]
+- using command ```docker-compose -up d``` to build the image
 - Applying kubernetes deployment file ```yarn k8s:apply``` [Optional]
 
 
