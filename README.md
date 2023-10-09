@@ -50,6 +50,9 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+### We are using ioredis-mock to mock the redis client in our tests
+### We are using mongodb-memory-server to mock the mongodb connection in our tests
+
 
 
 ## Architecture
@@ -162,6 +165,7 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 
 ## Database
 - We have created a db cluster in MongoDB Atlas instead of doing it locally and spin up a docker container for the database, Just for the sake of simplicity.
+
 
 ## CI/CD 
 - We are using github actions to run the tests and build the docker image and push it to the registry
