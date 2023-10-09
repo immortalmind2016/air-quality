@@ -1,19 +1,39 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, getConnectionToken } from '@nestjs/mongoose';
 import { AirInformationController } from '../controller/air-information.controller';
 import { Pollution, PollutionSchema } from '../schema/pollution.schema';
 import { AirInformationService } from '../air-information-service';
-import { BullModule } from '@nestjs/bull';
+import { BullModule, getQueueToken } from '@nestjs/bull';
 import { Queues } from '../types';
 import { AirInfoQueueConsumer } from '../queue/air-info-queue';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
+import axios from 'axios';
+import mongoose from 'mongoose';
+import { Queue } from 'bull';
 
 describe('AirInformationController', () => {
   let controller: AirInformationController;
+  let module: TestingModule;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+  beforeAll(async () => {
+    // Mock Axios.get method
+    jest.spyOn(axios, 'get').mockResolvedValue({
+      data: {
+        data: {
+          current: {
+            pollution: {
+              aqius: 18,
+              aqicn: 20,
+              mainus: 'p1',
+              maincn: 'p1',
+              ts: '2017-02-01T01:15:00.000Z',
+            },
+          },
+        },
+      },
+    });
+    module = await Test.createTestingModule({
       controllers: [AirInformationController],
       imports: [
         ConfigModule.forRoot({
@@ -57,6 +77,13 @@ describe('AirInformationController', () => {
     controller = module.get<AirInformationController>(AirInformationController);
   });
 
+  afterAll(async () => {
+    const queue = module.get<Queue>(getQueueToken(Queues.AirInformationQueue));
+    await queue.close();
+
+    const connection = module.get<mongoose.Connection>(getConnectionToken());
+    await connection.close();
+  });
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });

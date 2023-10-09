@@ -10,15 +10,20 @@ import {
   PollutionInfo,
   Queues,
 } from '../types';
-import { MongooseModule, getModelToken } from '@nestjs/mongoose';
+import {
+  MongooseModule,
+  getConnectionToken,
+  getModelToken,
+} from '@nestjs/mongoose';
 import { Pollution, PollutionSchema } from '../schema/pollution.schema';
 import mongoose, { Connection, Model, connect } from 'mongoose';
 import axios from 'axios';
-import { BullModule } from '@nestjs/bull';
+import { BullModule, getQueueToken } from '@nestjs/bull';
 import { AirInfoQueueConsumer } from '../queue/air-info-queue';
 import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
-
+import { Queue } from 'bull';
+import IORedis from 'ioredis-mock';
 class MockProviderFactory implements AirInformationProvider {
   getNearestCityPollution(
     geoInfo: AirPollutionGeoInfoDTO,
@@ -47,14 +52,19 @@ describe('Air information service [unit-tests]', () => {
 
   let payload: PollutionInfo = null;
   let geoInfo: GeoInformation = null;
+  let pollutionModel: Model<Pollution>;
+  let redisClient;
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
-  let pollutionModel: Model<Pollution>;
+  let module: TestingModule;
 
   beforeAll(async () => {
-    // jest.spyOn(axios, 'get').mockResolvedValue(mockAxiosResponse);
+    redisClient = new IORedis();
+    mongod = await MongoMemoryServer.create();
+    const uri = mongod.getUri();
+    mongoConnection = (await connect(uri)).connection;
 
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       providers: [
         AirInformationService,
         AirInfoQueueConsumer,
@@ -70,28 +80,8 @@ describe('Air information service [unit-tests]', () => {
         MongooseModule.forFeature([
           { name: Pollution.name, schema: PollutionSchema },
         ]),
-        MongooseModule.forRootAsync({
-          inject: [ConfigService],
-          imports: [ConfigModule],
-
-          useFactory: (configService: ConfigService) => {
-            return {
-              uri: configService.get('MONGO_URI'),
-            };
-          },
-        }),
-        BullModule.forRootAsync({
-          inject: [ConfigService],
-          imports: [ConfigModule],
-          useFactory: (configService: ConfigService) => {
-            return {
-              redis: {
-                host: configService.get('REDIS_HOST'),
-                port: configService.get('REDIS_PORT'),
-              },
-            };
-          },
-        }),
+        MongooseModule.forRoot(uri),
+        BullModule.forRoot({ redis: redisClient }),
         BullModule.registerQueue({
           name: Queues.AirInformationQueue,
         }),
@@ -114,7 +104,17 @@ describe('Air information service [unit-tests]', () => {
     geoInfo = { lat: 31.00192, lon: 30.78847 };
   });
 
-  afterAll(async () => {});
+  afterAll(async () => {
+    await mongoConnection.dropDatabase();
+    await mongoConnection.close();
+    await mongod.stop();
+
+    const queue = module.get<Queue>(getQueueToken(Queues.AirInformationQueue));
+    await queue.close();
+
+    const connection = module.get<mongoose.Connection>(getConnectionToken());
+    await connection.close();
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
