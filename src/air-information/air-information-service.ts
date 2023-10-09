@@ -12,7 +12,7 @@ import { Model } from 'mongoose';
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
 import { AirInformationProviderFactory } from './external-providers/air-info-provider-factory';
-import { DatabaseException } from 'src/common/exceptions/database-exception';
+import { DatabaseException } from '../../src/common/exceptions/database-exception';
 @Injectable()
 export class AirInformationService {
   private logger = new Logger(AirInformationService.name);
