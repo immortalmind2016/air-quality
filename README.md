@@ -75,8 +75,11 @@ $ yarn run test:cov
 │   │   │   ├── air-information.dto.ts
 │   │   ├── external-providers
 │   │   │   ├── iq-air.provider.ts
+│   │   │   ├── air-info-provider-factory
 │   │   ├── jobs
 │   │   │   ├── get-air-info.ts
+│   │   │   ├── get-air-info-v2.ts
+│   │   │   ├── check-air-info-provider-status.ts
 │   │   ├── test
 │   │   │   ├── air-info-provider-factory.spec.ts
 │   │   │   ├── air-info-service-integration.spec.ts
@@ -87,6 +90,10 @@ $ yarn run test:cov
 │   │   ├── air-information.service.ts
 │   │   ├── air-information.module.ts
 │   ├── common
+│   │   ├── exceptions
+│   │   │   ├── api-key-exception.ts
+│   │   │   ├── external-call-exception.ts
+│   │   │   ├── database-exception.ts
 │   ├── app.module.ts
 │   ├── main.ts
 │   ├── app.controller.ts
@@ -181,36 +188,37 @@ NOTE: We won't test the cronjobs as we already tested the logic in our tests
 ##### The most important files to test are: [controllers,services,external-providers]
 ```bash
 -----------------------------------------|---------|----------|---------|---------|----------------------
-File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s    
 -----------------------------------------|---------|----------|---------|---------|----------------------
-All files                                |   52.54 |    26.31 |   51.35 |   50.23 |
- src                                     |   40.74 |        0 |   66.66 |   33.33 |
-  app.controller.ts                      |     100 |      100 |     100 |     100 |
-  app.module.ts                          |       0 |      100 |     100 |       0 | 1-11
-  app.service.ts                         |     100 |      100 |     100 |     100 |
+All files                                |    52.2 |    26.31 |      50 |      50 |                      
+ src                                     |   40.74 |        0 |   66.66 |   33.33 |                      
+  app.controller.ts                      |     100 |      100 |     100 |     100 |                      
+  app.module.ts                          |       0 |      100 |     100 |       0 | 1-11                 
+  app.service.ts                         |     100 |      100 |     100 |     100 |                      
   main.ts                                |       0 |        0 |       0 |       0 | 1-20
- src/air-information                     |   62.79 |    66.66 |   77.77 |    64.1 |
-  air-information-service.ts             |     100 |      100 |     100 |     100 |
+ src/air-information                     |   59.25 |    66.66 |   77.77 |      60 | 
+  air-information-service.ts             |   82.35 |      100 |     100 |   81.25 | 50-51,67-68,83-84    
   air-information.module.ts              |       0 |        0 |       0 |       0 | 1-56
-  types.ts                               |     100 |      100 |     100 |     100 |
- src/air-information/controller          |   68.75 |        0 |      60 |   64.28 |
+  types.ts                               |     100 |      100 |     100 |     100 | 
+ src/air-information/controller          |   68.75 |        0 |      60 |   64.28 | 
   air-information-internal.controller.ts |      75 |      100 |      50 |      70 | 21-23
   air-information.controller.ts          |      65 |        0 |   66.66 |   61.11 | 33-34,62-70
- src/air-information/dto                 |       0 |      100 |     100 |       0 |
+ src/air-information/dto                 |       0 |      100 |     100 |       0 | 
   air-information.dto.ts                 |       0 |      100 |     100 |       0 | 1-8
- src/air-information/external-providers  |   84.84 |    33.33 |     100 |   83.87 |
+ src/air-information/external-providers  |   84.84 |    33.33 |     100 |   83.87 | 
   air-info-provider-factory.ts           |   92.85 |        0 |     100 |   91.66 | 25
   iq-air-provider.ts                     |   78.94 |       50 |     100 |   78.94 | 24-25,42-43
- src/air-information/jobs                |       0 |        0 |       0 |       0 |
+ src/air-information/jobs                |       0 |        0 |       0 |       0 | 
   check-air-info-provider-status.ts      |       0 |        0 |       0 |       0 | 1-39
   get-air-info-v2.ts                     |       0 |      100 |     100 |       0 | 1-3
   get-air-info.ts                        |       0 |      100 |       0 |       0 | 1-30
- src/air-information/queue               |   54.83 |        0 |   14.28 |   51.72 |
-  air-info-queue.ts                      |   54.83 |        0 |   14.28 |   51.72 | 27,34-51,58,62,67,72
- src/air-information/schema              |     100 |      100 |     100 |     100 |
-  pollution.schema.ts                    |     100 |      100 |     100 |     100 |
- src/common/exceptions                   |   66.66 |      100 |       0 |   66.66 |
+ src/air-information/queue               |   53.33 |        0 |   14.28 |      50 | 
+  air-info-queue.ts                      |   53.33 |        0 |   14.28 |      50 | 25,32-49,56,60,65,70
+ src/air-information/schema              |     100 |      100 |     100 |     100 | 
+  pollution.schema.ts                    |     100 |      100 |     100 |     100 | 
+ src/common/exceptions                   |   66.66 |      100 |       0 |   66.66 | 
   api-key-exception.ts                   |   66.66 |      100 |       0 |   66.66 | 5
+  database-exception.ts                  |   66.66 |      100 |       0 |   66.66 | 5
   external-call-exception.ts             |   66.66 |      100 |       0 |   66.66 | 5
 -----------------------------------------|---------|----------|---------|---------|----------------------
 
