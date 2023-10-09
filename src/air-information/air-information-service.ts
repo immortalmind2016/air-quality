@@ -12,6 +12,7 @@ import { Model } from 'mongoose';
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
 import { AirInformationProviderFactory } from './external-providers/air-info-provider-factory';
+import { DatabaseException } from 'src/common/exceptions/database-exception';
 @Injectable()
 export class AirInformationService {
   private logger = new Logger(AirInformationService.name);
@@ -38,12 +39,17 @@ export class AirInformationService {
     // Once we have multiple providers, we are using a factory to get the right provider based on the discriminator.
 
     // We are using strategy pattern here, so we can easily add more providers, And using the same interface .
-    const pollution = await provider.getNearestCityPollution(geoInfo);
-    return {
-      Result: {
-        pollution,
-      },
-    };
+    try {
+      const pollution = await provider.getNearestCityPollution(geoInfo);
+      return {
+        Result: {
+          pollution,
+        },
+      };
+    } catch (e) {
+      this.logger.warn(e.message);
+      throw new DatabaseException(e.message);
+    }
   }
 
   async storeGeoPollution(
@@ -51,18 +57,32 @@ export class AirInformationService {
     info: PollutionInfo,
   ) {
     this.logger.log(`store geo pollution for ${JSON.stringify(geoInfo)}`);
-    return this.pollutionModel.create({ geoInfo: geoInfo, ...info });
+    try {
+      const createdInfo = await this.pollutionModel.create({
+        geoInfo: geoInfo,
+        ...info,
+      });
+      return createdInfo;
+    } catch (e) {
+      this.logger.warn(e.message);
+      throw new DatabaseException(e.message);
+    }
   }
 
   async getMostPollutedDate(geoInfo: AirPollutionGeoInfoDTO) {
     this.logger.log(`get most polluted date for ${JSON.stringify(geoInfo)}`);
     // -1 for DESC order
-    return (
-      await this.pollutionModel
-        .findOne({ 'geoInfo.lat': geoInfo.lat, 'geoInfo.lon': geoInfo.lon })
-        .sort({ aqius: -1 })
-        .lean()
-    )?.createdAt;
+    try {
+      return (
+        await this.pollutionModel
+          .findOne({ 'geoInfo.lat': geoInfo.lat, 'geoInfo.lon': geoInfo.lon })
+          .sort({ aqius: -1 })
+          .lean()
+      )?.createdAt;
+    } catch (e) {
+      this.logger.warn(e.message);
+      throw new DatabaseException(e.message);
+    }
   }
 
   //TODO: We can have a separate service for the queue
