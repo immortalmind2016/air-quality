@@ -18,9 +18,7 @@ export class AirInfoQueueConsumer {
     private readonly AirInfoService: AirInformationService,
     @InjectQueue(Queues.AirInformationQueue)
     private readonly airInfoQueue: Queue,
-  ) {
-    console.log('CONSTURCTOR');
-  }
+  ) {}
 
   @OnQueueActive()
   onActive(job: Job) {
