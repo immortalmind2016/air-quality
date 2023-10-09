@@ -60,4 +60,33 @@ describe('IQAirProvider [unit-tests]', () => {
       'GeoInformation is not set',
     );
   });
+
+  it('Throws an error of API key is not set', async () => {
+    // Set the API key
+    iqAirProvider.setApiKey(null);
+
+    // Call the function to get pollution data
+    const geoInfo = { lat: 31.00192, lon: 30.78847 };
+
+    await expect(
+      iqAirProvider.getNearestCityPollution(geoInfo),
+    ).rejects.toThrow('Api key is not set');
+  });
+
+  it('Throws external call error', async () => {
+    // Mock Axios.get method
+    jest.spyOn(axios, 'get').mockImplementation(null);
+
+    // Set the API key
+    iqAirProvider.setApiKey('your-api-key');
+
+    // Call the function to get pollution data
+    const geoInfo = { lat: 31.00192, lon: 30.78847 };
+
+    await expect(
+      iqAirProvider.getNearestCityPollution(geoInfo),
+    ).rejects.toThrow(
+      'something went wrong while you are requesting an external APIs',
+    );
+  });
 });

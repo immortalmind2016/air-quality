@@ -11,4 +11,13 @@ describe('AirInformationService', () => {
     );
     expect(provider).toBeInstanceOf(IQAirProvider);
   });
+
+  it('Throws error when invalid provider is provided', () => {
+    const airInformationProviderFactory = new AirInformationProviderFactory();
+    expect(() => {
+      airInformationProviderFactory.getStrategy(
+        AirInformationProviderEnum['test'],
+      );
+    }).toThrowError();
+  });
 });

@@ -131,7 +131,7 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file 
 - To run the cron job directly, you can run the command ```yarn run:job```
 
-#### Checking the status of the air information provider every 2 minutes
+#### Checking the status of the air information provider every 30 minutes
 - To run the cron job directly, you can run the command ```yarn run:status-job```
 
 
@@ -188,40 +188,46 @@ NOTE: We won't test the cronjobs as we already tested the logic in our tests
 ##### The most important files to test are: [controllers,services,external-providers]
 ```bash
 -----------------------------------------|---------|----------|---------|---------|----------------------
-File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s    
------------------------------------------|---------|----------|---------|---------|----------------------
-All files                                |    52.2 |    26.31 |      50 |      50 |                      
- src                                     |   40.74 |        0 |   66.66 |   33.33 |                      
-  app.controller.ts                      |     100 |      100 |     100 |     100 |                      
-  app.module.ts                          |       0 |      100 |     100 |       0 | 1-11                 
-  app.service.ts                         |     100 |      100 |     100 |     100 |                      
+-----------------------------------------|---------|----------|---------|---------|-------------------
+File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                        
+-----------------------------------------|---------|----------|---------|---------|-------------------
+All files                                |   55.06 |    36.84 |   56.75 |   53.12 | 
+ src                                     |   40.74 |        0 |   66.66 |   33.33 | 
+  app.controller.ts                      |     100 |      100 |     100 |     100 | 
+  app.module.ts                          |       0 |      100 |     100 |       0 | 1-11
+  app.service.ts                         |     100 |      100 |     100 |     100 | 
   main.ts                                |       0 |        0 |       0 |       0 | 1-20
  src/air-information                     |   59.25 |    66.66 |   77.77 |      60 | 
-  air-information-service.ts             |   82.35 |      100 |     100 |   81.25 | 50-51,67-68,83-84    
+  air-information-service.ts             |   82.35 |      100 |     100 |   81.25 | 50-51,67-68,83-84
   air-information.module.ts              |       0 |        0 |       0 |       0 | 1-56
   types.ts                               |     100 |      100 |     100 |     100 | 
  src/air-information/controller          |   68.75 |        0 |      60 |   64.28 | 
   air-information-internal.controller.ts |      75 |      100 |      50 |      70 | 21-23
-  air-information.controller.ts          |      65 |        0 |   66.66 |   61.11 | 33-34,62-70
+  air-information.controller.ts          |      65 |        0 |   66.66 |   61.11 | 33-34,62-70      
  src/air-information/dto                 |       0 |      100 |     100 |       0 | 
   air-information.dto.ts                 |       0 |      100 |     100 |       0 | 1-8
- src/air-information/external-providers  |   84.84 |    33.33 |     100 |   83.87 | 
-  air-info-provider-factory.ts           |   92.85 |        0 |     100 |   91.66 | 25
-  iq-air-provider.ts                     |   78.94 |       50 |     100 |   78.94 | 24-25,42-43
+ src/air-information/external-providers  |     100 |      100 |     100 |     100 | 
+  air-info-provider-factory.ts           |     100 |      100 |     100 |     100 | 
+  iq-air-provider.ts                     |     100 |      100 |     100 |     100 | 
  src/air-information/jobs                |       0 |        0 |       0 |       0 | 
-  check-air-info-provider-status.ts      |       0 |        0 |       0 |       0 | 1-39
-  get-air-info-v2.ts                     |       0 |      100 |     100 |       0 | 1-3
+  check-air-info-provider-status.ts      |       0 |        0 |       0 |       0 | 1-40
+  get-air-info-v2.ts                     |       0 |      100 |     100 |       0 | 2-4
   get-air-info.ts                        |       0 |      100 |       0 |       0 | 1-30
- src/air-information/queue               |   53.33 |        0 |   14.28 |      50 | 
-  air-info-queue.ts                      |   53.33 |        0 |   14.28 |      50 | 25,32-49,56,60,65,70
+ src/air-information/queue               |   53.57 |        0 |   16.66 |      50 | 
+  air-info-queue.ts                      |   53.57 |        0 |   16.66 |      50 | 25,32-49,56,61,66
  src/air-information/schema              |     100 |      100 |     100 |     100 | 
   pollution.schema.ts                    |     100 |      100 |     100 |     100 | 
- src/common/exceptions                   |   66.66 |      100 |       0 |   66.66 | 
-  api-key-exception.ts                   |   66.66 |      100 |       0 |   66.66 | 5
+ src/common/exceptions                   |   88.88 |      100 |   66.66 |   88.88 | 
+  api-key-exception.ts                   |     100 |      100 |     100 |     100 | 
   database-exception.ts                  |   66.66 |      100 |       0 |   66.66 | 5
-  external-call-exception.ts             |   66.66 |      100 |       0 |   66.66 | 5
------------------------------------------|---------|----------|---------|---------|----------------------
+  external-call-exception.ts             |     100 |      100 |     100 |     100 | 
+-----------------------------------------|---------|----------|---------|---------|-------------------
 
+Test Suites: 7 passed, 7 total
+Tests:       19 passed, 19 total
+Snapshots:   0 total
+Time:        9.907 s, estimated 63 s
+Ran all test suites.
 ```
 
 
