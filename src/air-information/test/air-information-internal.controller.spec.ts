@@ -9,23 +9,16 @@ import { BullModule, getQueueToken } from '@nestjs/bull';
 import { Queues } from '../types';
 import { AirInfoQueueConsumer } from '../queue/air-info-queue';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
-import mongoose, { Connection, connect } from 'mongoose';
+import mongoose from 'mongoose';
 import { Queue } from 'bull';
-import IORedis from 'ioredis-mock';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 
 describe('AirInformationInternalController', () => {
   let controller: AirInformationInternalController;
   let module: TestingModule;
-  let redisClient;
-  let mongod: MongoMemoryServer;
-  let mongoConnection: Connection;
 
   beforeAll(async () => {
-    redisClient = new IORedis();
-    mongod = await MongoMemoryServer.create();
-    const uri = mongod.getUri();
-    mongoConnection = (await connect(uri)).connection;
+    const redisClient = globalThis.__REDIS_CLIENT__;
+    const uri = globalThis.__MONGOD_URI__;
 
     module = await Test.createTestingModule({
       controllers: [AirInformationInternalController],
@@ -55,10 +48,6 @@ describe('AirInformationInternalController', () => {
   });
 
   afterAll(async () => {
-    await mongoConnection.dropDatabase();
-    await mongoConnection.close();
-    await mongod.stop();
-
     const queue = module.get<Queue>(getQueueToken(Queues.AirInformationQueue));
     await queue.close();
 

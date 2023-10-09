@@ -29,11 +29,8 @@ describe('Air information service [Integration-test]', () => {
 
   let payload: PollutionInfo = null;
   let geoInfo: GeoInformation = null;
-  let mongod: MongoMemoryServer;
-  let mongoConnection: Connection;
   let pollutionModel: Model<Pollution>;
   let mockAxiosResponse;
-  let redisClient;
   let module: TestingModule;
 
   beforeAll(async () => {
@@ -53,10 +50,11 @@ describe('Air information service [Integration-test]', () => {
       },
     };
     jest.spyOn(axios, 'get').mockResolvedValue(mockAxiosResponse);
-    redisClient = new IORedis();
-    mongod = await MongoMemoryServer.create();
-    const uri = mongod.getUri();
-    mongoConnection = (await connect(uri)).connection;
+
+    const redisClient = globalThis.__REDIS_CLIENT__;
+    const uri = globalThis.__MONGOD_URI__;
+    const mongoConnection = globalThis.__MONGOD_CONNECTION__;
+
     pollutionModel = mongoConnection.model(Pollution.name, PollutionSchema);
 
     module = await Test.createTestingModule({
@@ -96,10 +94,6 @@ describe('Air information service [Integration-test]', () => {
   });
 
   afterAll(async () => {
-    await mongoConnection.dropDatabase();
-    await mongoConnection.close();
-    await mongod.stop();
-
     const queue = module.get<Queue>(getQueueToken(Queues.AirInformationQueue));
     await queue.close();
 
