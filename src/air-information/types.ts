@@ -26,3 +26,7 @@ export interface PollutionInfo {
   aqicn: number; //main pollutant for Chinese AQI
   maincn: string;
 }
+
+export enum Queues {
+  AirInformationQueue = 'AirInformationQueue',
+}

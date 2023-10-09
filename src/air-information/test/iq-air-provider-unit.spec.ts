@@ -1,9 +1,7 @@
-import { IQAirProvider } from './iq-air-provider';
 import axios from 'axios';
+import { IQAirProvider } from '../external-providers/iq-air-provider';
 
-jest.mock('axios');
-
-describe('IQAirProvider', () => {
+describe('IQAirProvider [unit-tests]', () => {
   let iqAirProvider: IQAirProvider;
 
   beforeEach(() => {
@@ -62,6 +60,4 @@ describe('IQAirProvider', () => {
       'GeoInformation is not set',
     );
   });
-
-  // Add more test cases for error handling, etc.
 });

@@ -1,8 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../../app.module';
 import { AirInformationService } from '../air-information-service';
-import * as cron from 'node-cron';
 import { Logger } from '@nestjs/common';
+import * as cron from 'node-cron';
+import { AirInformationModule } from '../air-information.module';
+import { Queue } from 'bull';
+import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
 
 const GEO_INFO = {
   lat: 31.00192,
@@ -10,17 +12,20 @@ const GEO_INFO = {
 };
 
 const logger = new Logger('getAirInfo cron-job');
+const addAirInfoJob = async (queue: Queue, geoInfo: AirPollutionGeoInfoDTO) => {
+  return queue.add(geoInfo);
+};
 
 export const getAirInfo = async () => {
   logger.log('Running the cron job of getting air info');
-  const app = await NestFactory.createApplicationContext(AppModule); // Pass your AppModule here
+  const app = await NestFactory.createApplicationContext(AirInformationModule); // Pass your AppModule here
   const AirInfoService = app.get(AirInformationService);
-  const response = await AirInfoService.getNearestCityPopulation(GEO_INFO);
-  const pollution = response.Result.pollution;
-  logger.log('Storing air info');
-  await AirInfoService.storeGeoPollution(GEO_INFO, pollution);
+  const queue = await AirInfoService.getAirInfoQueue();
+  logger.log('Adding air info job');
+  await addAirInfoJob(queue, GEO_INFO);
 };
 
+// Every minute we will get the air info
 cron.schedule('* * * * *', () => {
   getAirInfo();
 });

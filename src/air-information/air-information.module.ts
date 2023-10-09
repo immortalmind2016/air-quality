@@ -4,11 +4,19 @@ import { AirInformationService } from './air-information-service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Pollution, PollutionSchema } from './schema/pollution.schema';
-import { AirInformationInternalController } from './controller/air-information.internal.controller';
 import { AirInformationController } from './controller/air-information.controller';
+import { BullModule } from '@nestjs/bull';
+import { Queues } from './types';
+import { AirInfoQueueConsumer } from './queue/air-info-queue';
+import { AirInformationProviderFactory } from './external-providers/air-info-provider-factory';
+import { AirInformationInternalController } from './controller/air-information-internal.controller';
 
 @Module({
-  providers: [AirInformationService],
+  providers: [
+    AirInformationService,
+    AirInfoQueueConsumer,
+    AirInformationProviderFactory,
+  ],
   imports: [
     ConfigModule.forRoot({
       // Add the .env for production as well once we have this environment
@@ -25,6 +33,21 @@ import { AirInformationController } from './controller/air-information.controlle
           uri: configService.get('MONGO_URI'),
         };
       },
+    }),
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        return {
+          redis: {
+            host: configService.get('REDIS_HOST'),
+            port: configService.get('REDIS_PORT'),
+          },
+        };
+      },
+    }),
+    BullModule.registerQueue({
+      name: Queues.AirInformationQueue,
     }),
   ],
   exports: [AirInformationService],

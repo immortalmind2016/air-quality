@@ -1,40 +1,26 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
-  AirInformationProvider,
   AirInformationProviderEnum,
   AirPollutionResult,
   PollutionInfo,
+  Queues,
 } from './types';
 import { AirPollutionGeoInfoDTO } from './dto/air-information.dto';
-import { IQAirProvider } from './external-providers/iq-air-provider';
 import { InjectModel } from '@nestjs/mongoose';
 import { Pollution } from './schema/pollution.schema';
 import { Model } from 'mongoose';
-
+import { Queue } from 'bull';
+import { InjectQueue } from '@nestjs/bull';
+import { AirInformationProviderFactory } from './external-providers/air-info-provider-factory';
 @Injectable()
 export class AirInformationService {
   private logger = new Logger(AirInformationService.name);
-  private provider: AirInformationProvider;
 
   constructor(
     @InjectModel(Pollution.name) private pollutionModel: Model<Pollution>,
+    @InjectQueue(Queues.AirInformationQueue) private airInfoQueue: Queue,
+    private readonly airInformationProviderFactory: AirInformationProviderFactory,
   ) {}
-
-  //TODO: will make it private once we have a discriminator key in the input.
-  createProviderFactory(providerName: AirInformationProviderEnum) {
-    switch (providerName) {
-      case AirInformationProviderEnum.IQAirProvider:
-        const _IQAirProvider = new IQAirProvider();
-        _IQAirProvider.setApiKey(process.env.IQ_AIR_API_KEY);
-        return _IQAirProvider;
-      default:
-        throw new Error('Invalid provider name');
-    }
-  }
-
-  private setProvider(provider: AirInformationProvider) {
-    this.provider = provider;
-  }
 
   async getNearestCityPopulation(
     geoInfo: AirPollutionGeoInfoDTO,
@@ -45,14 +31,14 @@ export class AirInformationService {
 
     // Base on a discriminator, we can use different providers
     // to get the air pollution data
-    const provider = this.createProviderFactory(
+    // Currently, we will hard code the provider.
+    const provider = this.airInformationProviderFactory.getStrategy(
       AirInformationProviderEnum.IQAirProvider,
     );
-    this.setProvider(provider);
     // Once we have multiple providers, we are using a factory to get the right provider based on the discriminator.
 
     // We are using strategy pattern here, so we can easily add more providers, And using the same interface .
-    const pollution = await this.provider.getNearestCityPollution(geoInfo);
+    const pollution = await provider.getNearestCityPollution(geoInfo);
     return {
       Result: {
         pollution,
@@ -77,5 +63,10 @@ export class AirInformationService {
         .sort({ aqius: -1 })
         .lean()
     )?.createdAt;
+  }
+
+  //TODO: We can have a separate service for the queue
+  async getAirInfoQueue() {
+    return this.airInfoQueue;
   }
 }

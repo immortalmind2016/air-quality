@@ -1,13 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { AirInformationService } from './air-information-service';
-import { GeoInformation, PollutionInfo } from './types';
+import {
+  AirInformationProvider,
+  AirInformationProviderEnum,
+  GeoInformation,
+  PollutionInfo,
+  Queues,
+} from '../types';
 import { MongooseModule, getModelToken } from '@nestjs/mongoose';
-import { Pollution, PollutionSchema } from './schema/pollution.schema';
+import { Pollution, PollutionSchema } from '../schema/pollution.schema';
 import { Connection, Model, connect } from 'mongoose';
+import axios from 'axios';
+import { BullModule } from '@nestjs/bull';
+import { AirInfoQueueConsumer } from '../queue/air-info-queue';
+import { AirInformationService } from '../air-information-service';
+import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
 
-describe('ExternalIntegrationService', () => {
+describe('Air information service [Integration-test]', () => {
   let service: AirInformationService;
 
   let payload: PollutionInfo = null;
@@ -15,8 +26,26 @@ describe('ExternalIntegrationService', () => {
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
   let pollutionModel: Model<Pollution>;
+  let mockAxiosResponse;
 
   beforeAll(async () => {
+    mockAxiosResponse = {
+      data: {
+        data: {
+          current: {
+            pollution: {
+              aqius: 18,
+              aqicn: 20,
+              mainus: 'p1',
+              maincn: 'p1',
+              ts: new Date('2017-02-01T01:15:00.000Z'),
+            },
+          },
+        },
+      },
+    };
+    jest.spyOn(axios, 'get').mockResolvedValue(mockAxiosResponse);
+
     mongod = await MongoMemoryServer.create();
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
@@ -26,6 +55,8 @@ describe('ExternalIntegrationService', () => {
       providers: [
         AirInformationService,
         { provide: getModelToken(Pollution.name), useValue: pollutionModel },
+        AirInfoQueueConsumer,
+        AirInformationProviderFactory,
       ],
       imports: [
         ConfigModule.forRoot({
@@ -43,6 +74,21 @@ describe('ExternalIntegrationService', () => {
               uri: configService.get('MONGO_URI'),
             };
           },
+        }),
+        BullModule.forRootAsync({
+          inject: [ConfigService],
+          imports: [ConfigModule],
+          useFactory: (configService: ConfigService) => {
+            return {
+              redis: {
+                host: configService.get('REDIS_HOST'),
+                port: configService.get('REDIS_PORT'),
+              },
+            };
+          },
+        }),
+        BullModule.registerQueue({
+          name: Queues.AirInformationQueue,
         }),
       ],
     }).compile();
@@ -71,7 +117,7 @@ describe('ExternalIntegrationService', () => {
     expect(service).toBeDefined();
   });
 
-  it('tests the integration with API of IQAIR and should return the pollution data', async () => {
+  it('returns the nearest city pollution API of IQAIR[mocked] and should return the pollution data', async () => {
     const {
       Result: { pollution },
     } =
@@ -95,6 +141,7 @@ describe('ExternalIntegrationService', () => {
     expect(data).toHaveProperty('createdAt');
     expect(data?.aqius).toBe(payload.aqius);
     expect(data?.geoInfo).toEqual(geoInfo);
+    expect(data._id).toBeDefined();
   });
 
   it('stores data in pollution collection', async () => {

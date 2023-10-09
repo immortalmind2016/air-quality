@@ -1,10 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AirInformationInternalController } from './air-information.internal.controller';
-import {} from './air-information.controller';
+import {} from '../controller/air-information.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Pollution, PollutionSchema } from '../schema/pollution.schema';
 import { AirInformationService } from '../air-information-service';
+import { AirInformationInternalController } from '../controller/air-information-internal.controller';
+import { BullModule } from '@nestjs/bull';
+import { Queues } from '../types';
+import { AirInfoQueueConsumer } from '../queue/air-info-queue';
+import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
 
 describe('AirInformationInternalController', () => {
   let controller: AirInformationInternalController;
@@ -28,8 +32,27 @@ describe('AirInformationInternalController', () => {
             };
           },
         }),
+        BullModule.forRootAsync({
+          inject: [ConfigService],
+          imports: [ConfigModule],
+          useFactory: (configService: ConfigService) => {
+            return {
+              redis: {
+                host: configService.get('REDIS_HOST'),
+                port: configService.get('REDIS_PORT'),
+              },
+            };
+          },
+        }),
+        BullModule.registerQueue({
+          name: Queues.AirInformationQueue,
+        }),
       ],
-      providers: [AirInformationService],
+      providers: [
+        AirInformationService,
+        AirInfoQueueConsumer,
+        AirInformationProviderFactory,
+      ],
     }).compile();
 
     controller = module.get<AirInformationInternalController>(

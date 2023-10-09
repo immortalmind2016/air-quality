@@ -1,9 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AirInformationController } from './air-information.controller';
-import { AirInformationService } from '../air-information-service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AirInformationController } from '../controller/air-information.controller';
 import { Pollution, PollutionSchema } from '../schema/pollution.schema';
+import { AirInformationService } from '../air-information-service';
+import { BullModule } from '@nestjs/bull';
+import { Queues } from '../types';
+import { AirInfoQueueConsumer } from '../queue/air-info-queue';
+import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
 
 describe('AirInformationController', () => {
   let controller: AirInformationController;
@@ -27,8 +31,27 @@ describe('AirInformationController', () => {
             };
           },
         }),
+        BullModule.forRootAsync({
+          inject: [ConfigService],
+          imports: [ConfigModule],
+          useFactory: (configService: ConfigService) => {
+            return {
+              redis: {
+                host: configService.get('REDIS_HOST'),
+                port: configService.get('REDIS_PORT'),
+              },
+            };
+          },
+        }),
+        BullModule.registerQueue({
+          name: Queues.AirInformationQueue,
+        }),
       ],
-      providers: [AirInformationService],
+      providers: [
+        AirInformationService,
+        AirInfoQueueConsumer,
+        AirInformationProviderFactory,
+      ],
     }).compile();
 
     controller = module.get<AirInformationController>(AirInformationController);
