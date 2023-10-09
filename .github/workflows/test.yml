@@ -6,7 +6,7 @@ on:
       - main # Change to your main branch name
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
