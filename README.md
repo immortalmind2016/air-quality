@@ -100,34 +100,46 @@ So You can create new air information provider by following these steps:
 
 
 ## Controllers
-- We have 2 controllers:
-#### 1- AirInformationController: responsible for exposing the air information to the client/external consumer
-#### 2- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job) [ NOT USED FOR NOW ]
+#### We have 2 controllers:
+- AirInformationController: responsible for exposing the air information to the client/external consumer
+- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job) [ <b>NOT USED FOR NOW</b> ]
 
 ## Data transfer objects (DTOs)
-- We have 1 DTO: 
-1- AirInformationDto: responsible for defining the data structure of the air information
+#### We have 1 DTO: 
+- AirInformationDto: responsible for defining the data structure of the air information
 
 ## Cron job
 
-- To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:apply```
+To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:apply```
 ### We have 2 approaches for the cron job:
-#### 1- Using internal cron jobs (using node-cron module).
-#### 2- Using kubernetes cron jobs.
+- Using internal cron jobs (using node-cron module).
+- Using kubernetes cron jobs.
 
-##### Our Cron job is responsible for:
-[Look at the recommended approach section for better approach]
-##### 1- Fetching the air information from the external provider every 1 minute
+### Our Cron job is responsible for:
+[Look at the recommendations section for better approach]
+#### Fetching the air information from the external provider every 1 minute
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file 
 - To run the cron job directly, you can run the command ```yarn run:job```
 
-##### 2- Checking the status of the air information provider every 2 minutes
+#### Checking the status of the air information provider every 2 minutes
 - To run the cron job directly, you can run the command ```yarn run:status-job```
 
+
+
+## Checking status cronjob
+- It's something like a health check for the external provider to make sure that it's up and running
+- implementation is close to cicuit breaker pattern
+### the flow
+- Invoke a function to call the external provider.
+- If the external provider is up and running, redis queue will be resumed.
+- If the external provider is down, redis queue will be paused.
 
 ## Redis Queue
 - We are using bull queue based on redis to handle the cron jobs.
 - We have created a queue called ```air-information-queue``` to handle the cron jobs
+### How we are using the queue.
+- Our cron job will push a job to the queue every 1 minute.
+- The queue consumer will invoke the job and fetch the air information from the external provider.
 
 ## Kubernetes
 #### we are using kubernetes to deploy our cron job
@@ -145,7 +157,7 @@ So You can create new air information provider by following these steps:
 
 
 ## Pre commit 
-- We are using husky to run the linting before commiting the code
+- We are using husky to run the linting before committing the code
 
 
 ## Database
@@ -204,7 +216,6 @@ All files                                |   52.54 |    26.31 |   51.35 |   50.2
 ## What next?
 - Add a discriminator field to the AirInformation entity in order to distinguish between different providers.
 - Add a new field to the pollution entity to store the provider name.
-- Using bull queue based on redis to handle the cron jobs.
 - Create kubernetes deployment file for the application.
 - Adding hash for each docker image based on the git commit hash [useful in rollback].
 

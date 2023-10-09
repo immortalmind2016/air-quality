@@ -121,7 +121,7 @@ describe('Air information service [Integration-test]', () => {
     const {
       Result: { pollution },
     } =
-      (await service.getNearestCityPopulation({
+      (await service.getNearestCityPollution({
         lat: 31.00192,
         lon: 30.78847,
       })) || {};

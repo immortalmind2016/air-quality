@@ -21,7 +21,7 @@ export const checkAirInfoProviderStatus = async () => {
   if (queue.isPaused()) {
     logger.log('Queue is paused');
     try {
-      await AirInfoService.getNearestCityPopulation(GEO_INFO);
+      await AirInfoService.getNearestCityPollution(GEO_INFO);
       queue.resume();
       logger.error('Queue is resumed');
     } catch (e) {

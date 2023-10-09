@@ -120,7 +120,7 @@ describe('Air information service [unit-tests]', () => {
     expect(service).toBeDefined();
   });
 
-  it('tests the getNearestCityPopulation function with mocked provider strategy ', async () => {
+  it('tests the getNearestCityPollution function with mocked provider strategy ', async () => {
     const {
       Result: { pollution },
     } = (await service.getNearestCityPollution(geoInfo)) || {};
