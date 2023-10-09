@@ -1,0 +1,26 @@
+version: '2'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '6379:6379'
+    restart: always
+    networks:
+      - app-tier
+  # air-app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: air-app
+  #   env_file: .env.dev
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - app-tier
