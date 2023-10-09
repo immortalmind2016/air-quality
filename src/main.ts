@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger: console });
 
   const config = new DocumentBuilder()
-    .setTitle('Air Quality API')
+    .setTitle('Air Quality APIs')
     .setDescription('The Air Quality API description')
     .setVersion('1.0')
     .build();
