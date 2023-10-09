@@ -123,7 +123,7 @@ describe('Air information service [unit-tests]', () => {
   it('tests the getNearestCityPopulation function with mocked provider strategy ', async () => {
     const {
       Result: { pollution },
-    } = (await service.getNearestCityPopulation(geoInfo)) || {};
+    } = (await service.getNearestCityPollution(geoInfo)) || {};
 
     expect(pollution).toHaveProperty('aqius');
     expect(pollution).toHaveProperty('aqicn');

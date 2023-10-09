@@ -67,17 +67,20 @@ $ yarn run test:cov
 │   ├── air-information
 │   │   ├── controller
 │   │   │   ├── air-information.controller.ts
-│   │   │   ├── air-information.controller.spec.ts
-│   │   │   ├── air-information.internal.controller.spec.ts
 │   │   │   ├── air-information.internal.controller.ts
 │   │   ├── dto
 │   │   │   ├── air-information.dto.ts
 │   │   ├── external-providers
 │   │   │   ├── iq-air.provider.ts
-│   │   │   ├── iq-air.provider.spec.ts
 │   │   ├── jobs
 │   │   │   ├── get-air-info.ts
-│   │   ├── air-information.controller.spec.ts
+│   │   ├── test
+│   │   │   ├── air-info-provider-factory.spec.ts
+│   │   │   ├── air-info-service-integration.spec.ts
+│   │   │   ├── air-information-internal.controller.spec.ts
+│   │   │   ├── air-information-service-unit.spec.ts
+│   │   │   ├── air-information.controller.spec.ts
+│   │   │   ├── iq-air-provider-unit.spec.ts
 │   │   ├── air-information.service.ts
 │   │   ├── air-information.module.ts
 │   ├── common

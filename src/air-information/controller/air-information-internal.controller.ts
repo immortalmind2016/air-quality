@@ -18,7 +18,7 @@ export class AirInformationInternalController {
   @Post('execute-air-info-job')
   async executeAirInfoJob() {
     const response =
-      await this.airInfoService.getNearestCityPopulation(GEO_INFO);
+      await this.airInfoService.getNearestCityPollution(GEO_INFO);
     const pollution = response.Result.pollution;
     return this.airInfoService.storeGeoPollution(GEO_INFO, pollution);
   }

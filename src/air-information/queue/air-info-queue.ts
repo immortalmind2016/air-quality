@@ -34,7 +34,7 @@ export class AirInfoQueueConsumer {
     this.logger.log('Consuming air info queue');
 
     try {
-      const response = await this.AirInfoService.getNearestCityPopulation(
+      const response = await this.AirInfoService.getNearestCityPollution(
         job.data,
       );
       const pollution = response.Result.pollution;

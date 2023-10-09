@@ -28,7 +28,7 @@ export class AirInformationController {
     // Handling the error here as well as the service function to return a proper response to the client based on the protocol.
     // So if we are using grpc, we can return a grpc error from it's interface.
     try {
-      return this.airInformationService.getNearestCityPopulation(geoInfo);
+      return this.airInformationService.getNearestCityPollution(geoInfo);
     } catch (e) {
       this.logger.warn(e.message);
       throw new Error(e.message);

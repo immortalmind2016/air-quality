@@ -22,11 +22,11 @@ export class AirInformationService {
     private readonly airInformationProviderFactory: AirInformationProviderFactory,
   ) {}
 
-  async getNearestCityPopulation(
+  async getNearestCityPollution(
     geoInfo: AirPollutionGeoInfoDTO,
   ): Promise<AirPollutionResult> {
     this.logger.log(
-      `get nearest city population for ${JSON.stringify(geoInfo)}`,
+      `get nearest city pollution for ${JSON.stringify(geoInfo)}`,
     );
 
     // Base on a discriminator, we can use different providers
