@@ -5,7 +5,6 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AirInformationService } from '../air-information-service';
 import {
   AirInformationProvider,
-  AirInformationProviderEnum,
   GeoInformation,
   PollutionInfo,
   Queues,
@@ -17,7 +16,6 @@ import {
 } from '@nestjs/mongoose';
 import { Pollution, PollutionSchema } from '../schema/pollution.schema';
 import mongoose, { Connection, Model, connect } from 'mongoose';
-import axios from 'axios';
 import { BullModule, getQueueToken } from '@nestjs/bull';
 import { AirInfoQueueConsumer } from '../queue/air-info-queue';
 import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
