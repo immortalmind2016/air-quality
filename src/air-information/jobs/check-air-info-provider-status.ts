@@ -18,6 +18,7 @@ export const checkAirInfoProviderStatus = async () => {
   const app = await NestFactory.createApplicationContext(AirInformationModule); // Pass your AppModule here
   const AirInfoService = app.get(AirInformationService);
   const queue = await AirInfoService.getAirInfoQueue();
+
   if (queue.isPaused()) {
     logger.log('Queue is paused');
     try {
@@ -34,7 +35,7 @@ export const checkAirInfoProviderStatus = async () => {
   }
 };
 
-// Every 2 minutes we will check the status of the air info provider
-cron.schedule('*/2 * * * *', () => {
+// Every 30 minutes we will check the status of the air info provider
+cron.schedule('*/30 * * * *', () => {
   checkAirInfoProviderStatus();
 });

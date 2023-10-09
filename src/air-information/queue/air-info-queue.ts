@@ -52,21 +52,17 @@ export class AirInfoQueueConsumer {
   }
 
   @OnQueueError()
-  onError() {
-    console.log('ERRRRRRRRRRROR');
-  }
-  @OnQueueError()
-  onError2() {
-    console.log('ERRRRRRRRRRROR2');
+  onError(error) {
+    this.logger.error(error);
   }
 
   @OnQueuePaused()
   onPause() {
-    console.log('ERRRRRRRRRRROR PAUSE');
+    this.logger.warn('Queue paused');
   }
 
   @OnQueueResumed()
   onResume() {
-    console.log('ERRRRRRRRRRROR RESUME');
+    this.logger.warn('Queue resumed');
   }
 }

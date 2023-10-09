@@ -13,7 +13,7 @@ const GEO_INFO = {
 export class AirInformationInternalController {
   constructor(private readonly airInfoService: AirInformationService) {}
 
-  // Being invoked internally by kubernetes cronjob every x minutes
+  // Being invoked internally by our services
   // So we won't add it to the swagger documentation
   @Post('execute-air-info-job')
   async executeAirInfoJob() {
