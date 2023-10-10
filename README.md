@@ -181,7 +181,7 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 
 
 ## How to use the API
-- Just check the swagger documentation at ```http://localhost:3000/api```
+- Just check the swagger documentation at ```http://localhost:3000/docs```
 
 
 ## Pre commit 

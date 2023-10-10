@@ -1,7 +1,8 @@
 import { Controller, Get, Logger, Query } from '@nestjs/common';
 import { AirInformationService } from '../air-information-service';
-import { AirPollutionResult, GeoInformation } from '../utils/types';
+import { AirPollutionResult } from '../utils/types';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
 
 @Controller('air-information')
 export class AirInformationController {
@@ -18,13 +19,8 @@ export class AirInformationController {
     type: Promise<AirPollutionResult>,
   })
   async getPollution(
-    @Query('lat') lat: number,
-    @Query('lon') lon: number,
+    @Query() geoInfo: AirPollutionGeoInfoDTO,
   ): Promise<AirPollutionResult> {
-    const geoInfo: GeoInformation = {
-      lat,
-      lon,
-    };
     // Handling the error here as well as the service function to return a proper response to the client based on the protocol.
     // So if we are using grpc, we can return a grpc error from it's interface.
     try {
@@ -55,14 +51,8 @@ export class AirInformationController {
     type: Promise<Date>,
   })
   async getMostPollutedDate(
-    @Query('lat') lat?: number,
-    @Query('lon') lon?: number,
+    @Query() geoInfo: AirPollutionGeoInfoDTO,
   ): Promise<Date> {
-    // default is paris zone
-    const geoInfo: GeoInformation = {
-      lat: lat ? lat : 31.00192,
-      lon: lon ? lon : 30.78847,
-    };
     try {
       return this.airInformationService.getMostPollutedDate(geoInfo);
     } catch (e) {

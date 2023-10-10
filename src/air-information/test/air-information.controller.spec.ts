@@ -89,7 +89,10 @@ describe('AirInformationController', () => {
   });
 
   it('Should return the pollution data', async () => {
-    const response = await controller.getPollution(31.00192, 30.78847);
+    const response = await controller.getPollution({
+      lat: 31.00192,
+      lon: 30.78847,
+    });
     expect(response).toBeDefined();
     expect(response?.Result?.pollution).toHaveProperty('aqius');
     expect(response?.Result?.pollution).toHaveProperty('aqicn');

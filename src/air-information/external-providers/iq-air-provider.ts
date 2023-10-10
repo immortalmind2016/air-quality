@@ -26,7 +26,13 @@ export class IQAirProvider implements AirInformationProvider {
     }
 
     try {
-      this.logger.log('Getting nearest city pollution');
+      this.logger.log('Getting nearest city pollution', {
+        params: {
+          lat: geoInfo.lat,
+          lon: geoInfo.lon,
+          key: this.apiKey,
+        },
+      });
       const response = await axios.get(
         `${process.env.IQ_AIR_ENDPOINT}/nearest_city`,
         {

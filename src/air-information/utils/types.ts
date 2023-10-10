@@ -5,10 +5,7 @@ export interface AirPollutionResult {
     pollution: PollutionInfo;
   };
 }
-export interface GeoInformation {
-  lat: number;
-  lon: number;
-}
+export interface GeoInformation extends AirPollutionGeoInfoDTO {}
 export interface AirInformationProvider {
   getNearestCityPollution(
     geoInfo: AirPollutionGeoInfoDTO,
