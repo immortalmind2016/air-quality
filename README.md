@@ -250,7 +250,8 @@ Ran all test suites.
 - Add a discriminator field to the AirInformation entity in order to distinguish between different providers.
 - Add a new field to the pollution entity to store the provider name.
 - Create kubernetes deployment file for the application.
-- Adding hash for each docker image based on the git commit hash [useful in rollback].
+- Adding hash for each docker image as a tag based on the git commit hash [useful in rollback].
+- Test our endpoints.
 
 
 
