@@ -26,18 +26,13 @@ check it on drowl.io: https://drive.google.com/file/d/1E8TPRBTn8VuTRyP0uevB9eljm
 - Enable Kubernetes in docker [optional]
 - Change kubectl context to docker-desktop [optional] ```bash kubectl config use-context docker-desktop```
 
-## Installation
-
-```bash
-$ yarn install
-```
-
 ## Running the app without docker
 
-```bash
-$ docker-compose up -d
-```
-
+- you have to run redis
+  - using docker is  [OPTIONAL]
+  ```bash
+  $ docker run -d -p 6379:6379 redis
+  ```
 ```bash
 # development
 $ yarn run start
