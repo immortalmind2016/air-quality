@@ -104,6 +104,9 @@ $ yarn run test:cov
 │   │   │   ├── iq-air-provider-unit.spec.ts
 │   │   ├── air-information.service.ts
 │   │   ├── air-information.module.ts
+│   │   ├── utils
+│   │   │   ├── constants.ts
+│   │   │   ├── types.ts
 │   ├── common
 │   │   ├── exceptions
 │   │   │   ├── api-key-exception.ts
