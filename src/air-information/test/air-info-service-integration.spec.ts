@@ -8,20 +8,19 @@ import {
   GeoInformation,
   PollutionInfo,
   Queues,
-} from '../types';
+} from '../utils/types';
 import {
   MongooseModule,
   getConnectionToken,
   getModelToken,
 } from '@nestjs/mongoose';
 import { Pollution, PollutionSchema } from '../schema/pollution.schema';
-import mongoose, { Connection, Model, connect } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import axios from 'axios';
 import { BullModule, getQueueToken } from '@nestjs/bull';
 import { AirInfoQueueConsumer } from '../queue/air-info-queue-consumer';
 import { AirInformationService } from '../air-information-service';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
-import IORedis from 'ioredis-mock'; // Import ioredis-mock
 import { Queue } from 'bull';
 
 describe('Air information service [Integration-test]', () => {

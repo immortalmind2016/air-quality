@@ -5,7 +5,7 @@ import { AirInformationController } from '../controller/air-information.controll
 import { Pollution, PollutionSchema } from '../schema/pollution.schema';
 import { AirInformationService } from '../air-information-service';
 import { BullModule, getQueueToken } from '@nestjs/bull';
-import { Queues } from '../types';
+import { Queues } from '../utils/types';
 import { AirInfoQueueConsumer } from '../queue/air-info-queue-consumer';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
 import axios from 'axios';

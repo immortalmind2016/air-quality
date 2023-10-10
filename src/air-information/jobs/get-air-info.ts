@@ -4,11 +4,7 @@ import * as cron from 'node-cron';
 import { Queue } from 'bull';
 import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
 import { CreateAirInformationModuleSingleton } from '../../common/create-air-info-module-singleton';
-
-const GEO_INFO = {
-  lat: 31.00192,
-  lon: 30.78847,
-};
+import { GEO_INFO } from '../utils/constants';
 
 const logger = new Logger('getAirInfo cron-job');
 const addAirInfoJob = async (queue: Queue, geoInfo: AirPollutionGeoInfoDTO) => {

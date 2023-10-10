@@ -4,6 +4,17 @@ The goal of this project is to create a REST API responsible for exposing “the
 quality information” of a nearest city to GPS coordinates using iqair
 
 
+
+
+## Project main components
+#### Default flow running the nodejs application
+#### The cronjob
+- The cronjob is responsible for fetching the air information from the external provider every 1 minute and store it in the database.
+
+<!-- add image -->
+![Alt text](https://ibb.co/cg3vHkp "cronjob flow")
+
+
 ## Requirements
 - Nodejs
 - Yarn
@@ -139,12 +150,15 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - It's something like a health check for the external provider to make sure that it's up and running
 - implementation is close to circuit breaker pattern
 
+#### flow
+- The cron job will push a job to the queue every 1 minute.
+- The queue consumer will invoke the job and fetch the air information from the external provider.
+- If the external provider is up, the queue consumer will store the air information in the database.
+- If the external provider is down, the queue consumer will pause the queue.
+- We will check the status of the external provider every 30 minutes.
+  - If the external provider is up, we will resume the queue.
+  - If the external provider is down, we will keep the queue paused.
 
-
-### the flow
-- Invoke a function to call the external provider.
-- If the external provider is up and running, redis queue will be resumed.
-- If the external provider is down, redis queue will be paused.
 
 ## Redis Queue
 - We are using bull queue based on redis to handle the cron jobs.

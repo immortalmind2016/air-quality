@@ -1,4 +1,4 @@
-import { AirInformationProviderEnum } from '../types';
+import { AirInformationProviderEnum } from '../utils/types';
 import { AirInformationProviderFactory } from '../external-providers/air-info-provider-factory';
 import { IQAirProvider } from '../external-providers/iq-air-provider';
 

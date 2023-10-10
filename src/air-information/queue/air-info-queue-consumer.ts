@@ -8,13 +8,10 @@ import {
   OnQueueResumed,
 } from '@nestjs/bull';
 import { Job, Queue } from 'bull';
-import { GeoInformation, Queues } from '../types';
+import { GeoInformation, Queues } from '../utils/types';
 import { AirInformationService } from '../air-information-service';
 import { Logger } from '@nestjs/common';
-const GEO_INFO = {
-  lat: 31.00192,
-  lon: 30.78847,
-};
+import { GEO_INFO } from '../utils/constants';
 
 @Processor(Queues.AirInformationQueue)
 export class AirInfoQueueConsumer {

@@ -4,7 +4,7 @@ import {
   AirPollutionResult,
   PollutionInfo,
   Queues,
-} from './types';
+} from './utils/types';
 import { AirPollutionGeoInfoDTO } from './dto/air-information.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Pollution } from './schema/pollution.schema';

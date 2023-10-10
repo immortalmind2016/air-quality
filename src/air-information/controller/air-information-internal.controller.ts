@@ -1,11 +1,7 @@
 import { Controller, Post } from '@nestjs/common';
 import { AirInformationService } from '../air-information-service';
 import { ApiExcludeController } from '@nestjs/swagger';
-// paris zone geo info
-const GEO_INFO = {
-  lat: 31.00192,
-  lon: 30.78847,
-};
+import { GEO_INFO } from '../utils/constants';
 
 // We can use this controller in order to have internal calls (e.g. call an endpoint from kubernetes cronjob)
 @Controller('air-information-internal')

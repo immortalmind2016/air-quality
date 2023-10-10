@@ -1,4 +1,4 @@
-import { AirPollutionGeoInfoDTO } from './dto/air-information.dto';
+import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
 
 export interface AirPollutionResult {
   Result: {

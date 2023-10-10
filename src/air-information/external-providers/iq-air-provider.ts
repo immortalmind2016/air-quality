@@ -1,6 +1,6 @@
 import { ApiException } from '../../common/exceptions/api-key-exception';
 import { AirPollutionGeoInfoDTO } from '../dto/air-information.dto';
-import { AirInformationProvider, PollutionInfo } from '../types';
+import { AirInformationProvider, PollutionInfo } from '../utils/types';
 import axios from 'axios';
 import { BadRequestException, Logger } from '@nestjs/common';
 import { ExternalCallException } from '../../common/exceptions/external-call-exception';

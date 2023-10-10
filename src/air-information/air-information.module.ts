@@ -6,7 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Pollution, PollutionSchema } from './schema/pollution.schema';
 import { AirInformationController } from './controller/air-information.controller';
 import { BullModule } from '@nestjs/bull';
-import { Queues } from './types';
+import { Queues } from './utils/types';
 import { AirInfoQueueConsumer } from './queue/air-info-queue-consumer';
 import { AirInformationProviderFactory } from './external-providers/air-info-provider-factory';
 import { AirInformationInternalController } from './controller/air-information-internal.controller';

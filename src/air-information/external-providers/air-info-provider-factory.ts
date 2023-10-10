@@ -1,6 +1,9 @@
 // strategy.factory.ts
 import { Injectable } from '@nestjs/common';
-import { AirInformationProvider, AirInformationProviderEnum } from '../types';
+import {
+  AirInformationProvider,
+  AirInformationProviderEnum,
+} from '../utils/types';
 import { IQAirProvider } from './iq-air-provider';
 
 @Injectable()

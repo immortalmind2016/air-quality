@@ -1,6 +1,6 @@
 import { Controller, Get, Logger, Query } from '@nestjs/common';
 import { AirInformationService } from '../air-information-service';
-import { AirPollutionResult, GeoInformation } from '../types';
+import { AirPollutionResult, GeoInformation } from '../utils/types';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 
 @Controller('air-information')
