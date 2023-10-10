@@ -22,8 +22,7 @@
     "run:job": "ts-node ./src/air-information/jobs/get-air-info.ts ",
     "k8s:apply": "bash ./scripts/apply-cronjob-deployment.sh",
     "docker:deploy": "bash ./scripts/deploy-docker-image.sh",
-    "docker:start": "bash ./scripts/start-docker-image.sh",
-    "run:start-script": "bash ./scripts/start.sh"
+    "docker:start": "bash ./scripts/start-docker-image.sh"
   },
   "dependencies": {
     "@nestjs/bull": "^10.0.1",

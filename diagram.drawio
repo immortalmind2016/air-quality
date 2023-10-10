@@ -1,0 +1,127 @@
+<mxfile host="app.diagrams.net" modified="2023-10-10T01:30:50.964Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.60" etag="oRm3I0IvAUtpr6rhY1pn" version="21.7.4" type="google">
+  <diagram name="Page-1" id="19tGpMwrza1mSHTn0KHP">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-3" value="Cronjob flow" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="250" y="200" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-5" value="" style="whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="253" y="270" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-6" value="Every one minute [cron-job]" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="250" y="271" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-7" target="em6kyO7ZxVYTOFRSzWy9-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-7" value="Add job to the air info queue." style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="273" y="314" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-9" target="em6kyO7ZxVYTOFRSzWy9-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-9" target="em6kyO7ZxVYTOFRSzWy9-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-9" value="Air Info Queue" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="510" y="261" width="120" height="350" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-13" target="em6kyO7ZxVYTOFRSzWy9-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-13" value="Queue Consumer&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="770" y="401" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-16" value="Job added" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="830" y="518" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1040" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-17" target="em6kyO7ZxVYTOFRSzWy9-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-17" value="Process: Get air info&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="770" y="620" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-21" value="Store" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="950" y="660" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-22" value="DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="610" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-23" value="OK" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#82b366;fillColor=#d5e8d4;" vertex="1" parent="1">
+          <mxGeometry x="950" y="620" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-25" value="IQAir Down/rate limit" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#b85450;fillColor=#f8cecc;" vertex="1" parent="1">
+          <mxGeometry x="850" y="700" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-27" value="" style="whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="651" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-29" value="Interval every 30 minutes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="270" y="661" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-30" target="em6kyO7ZxVYTOFRSzWy9-41">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="821" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-30" value="Check if get air info returns data or not [down?]" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="290" y="690" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-34" value="Is up&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#82b366;fillColor=#d5e8d4;" vertex="1" parent="1">
+          <mxGeometry x="365" y="761" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-35" target="em6kyO7ZxVYTOFRSzWy9-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-35" value="Pause the queue" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="770" y="740" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-38" value="Queue listener to pause event" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="570" y="740" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-40" value="Pause event&lt;br&gt;handler" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="385" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-41" value="Resume the queue" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="290" y="811" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-45" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn2.iconfinder.com/data/icons/vivid/48/headphone-128.png" vertex="1" parent="1">
+          <mxGeometry x="572" y="590" width="58" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-46" target="em6kyO7ZxVYTOFRSzWy9-50">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1148" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-46" value="Get air info" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1068" y="280" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="em6kyO7ZxVYTOFRSzWy9-50" target="em6kyO7ZxVYTOFRSzWy9-53">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1338" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-50" value="Call External APIs" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1068" y="450" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-53" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Server_Desktop.svg;" vertex="1" parent="1">
+          <mxGeometry x="1318" y="436.5" width="84.41" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="em6kyO7ZxVYTOFRSzWy9-54" value="&lt;b&gt;IQAIR&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1328" y="368" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
