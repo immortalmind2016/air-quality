@@ -197,6 +197,17 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 ## CI/CD 
 - We are using github actions to run the tests and build the docker image and push it to the registry
 
+## Conventions
+#### Commits
+- We are using conventional commits to make our commits more readable and understandable [chore: your message ] prefix maybe <b>[feat,docs,chore,fix]</b> 
+check it here: `.commitlintrc.json`
+#### Enum [PascalCase]
+
+#### Files [kabab-case]
+#### Variables
+- Constants = UPPER_CASE
+- Normal variables = camelCase
+
 
 ## Recommendations
 - Use kubernetes to deploy the cron job instead of using node-cron module.
