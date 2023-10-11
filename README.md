@@ -24,15 +24,21 @@ check it on draw.io: https://drive.google.com/file/d/1E8TPRBTn8VuTRyP0uevB9eljm7
 - Yarn
 - Docker [optional]
 - Enable Kubernetes in docker [optional]
-- Change kubectl context to docker-desktop [optional] ```bash kubectl config use-context docker-desktop```
+- Change kubectl context to docker-desktop [optional] 
+- Lens [optional] [To monitor the kubernetes cluster - GUI]
+```bash
+$ kubectl config use-context docker-desktop
+ ```
 
 ## Running the app without docker
 
 - you have to run redis
   - using docker is  [OPTIONAL]
-  ```bash
-  $ docker run -d -p 6379:6379 redis
-  ```
+
+```bash
+$ docker run -d -p 6379:6379 redis
+```
+
 ```bash
 # development
 $ yarn run start
@@ -47,7 +53,7 @@ $ yarn run start:prod
 ## Running the app using Docker and Kubernetes
 - We have created a docker file to containerize our application
 - using command ```docker-compose -up d``` to build the image
-- Applying kubernetes deployment file ```yarn k8s:apply``` [Optional]
+- Applying kubernetes deployment file ```yarn k8s:apply``` [Optional] [To run the cron job in kubernetes]
 
 
 ## Test
