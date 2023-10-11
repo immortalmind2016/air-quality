@@ -42,14 +42,14 @@ export class AirInfoQueueConsumer {
 
       await this.AirInfoService.storeGeoPollution(job.data, pollution);
     } catch (e) {
-      if (e) {
-        // If the provider is not available, we will pause the queue
-        // and we will check the status of the provider every 30 minutes using another cron job
-        this.logger.warn(
-          'The air info provider is not available, queue paused',
-        );
-        this.airInfoQueue.pause();
-      }
+      // If the provider is not available, we will pause the queue
+      // and we will check the status of the provider every 30 minutes [Read our docs].
+
+      await Promise.all([
+        this.airInfoQueue.pause(),
+        job.moveToFailed({ message: e.message }, true),
+      ]);
+      this.logger.warn('The air info provider is not available, queue paused');
     }
   }
 

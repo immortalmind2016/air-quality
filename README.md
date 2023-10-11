@@ -152,8 +152,7 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 
 #### Checking the last completed jobs done in within the last 30 minutes 
 - So we will check if there're completed jobs in the last 30 minutes 
-  - If no completed jobs, we will resume the queue, as it means we waited for 30 minutes, So process the jobs in the queue.
-  - If yes completed jobs, do nothing
+  - If no failed jobs, we will resume the queue, as it means we waited for 30 minutes, So the external provider may be available now..
 - implementation is close to circuit breaker pattern
 
 #### flow
@@ -162,8 +161,7 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - If the external provider is <strong>up</strong>, the queue consumer will store the air information in the database.
 - If the external provider is <strong>down</strong>, the queue consumer will pause the queue.
 - We will check if there're completed jobs in the last 30 minutes 
-  - If no completed jobs, we will resume the queue, as it means we waited for 30 minutes, So process the jobs in the queue.
-  - If yes completed jobs, do nothing
+  - If no failed jobs, we will resume the queue, as it means we waited for 30 minutes, So the external provider may be available now.
 
 
 ## Redis Queue
