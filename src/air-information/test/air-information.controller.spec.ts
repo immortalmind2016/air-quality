@@ -15,8 +15,10 @@ import { Queue } from 'bull';
 describe('AirInformationController', () => {
   let controller: AirInformationController;
   let module: TestingModule;
+  let uri: string;
 
   beforeAll(async () => {
+    uri = globalThis.__MONGOD_URI__;
     // Mock Axios.get method
     jest.spyOn(axios, 'get').mockResolvedValue({
       data: {
@@ -42,15 +44,7 @@ describe('AirInformationController', () => {
         MongooseModule.forFeature([
           { name: Pollution.name, schema: PollutionSchema },
         ]),
-        MongooseModule.forRootAsync({
-          inject: [ConfigService],
-          imports: [ConfigModule],
-          useFactory: (configService: ConfigService) => {
-            return {
-              uri: configService.get('MONGO_URI'),
-            };
-          },
-        }),
+        MongooseModule.forRoot(uri),
         BullModule.forRootAsync({
           inject: [ConfigService],
           imports: [ConfigModule],

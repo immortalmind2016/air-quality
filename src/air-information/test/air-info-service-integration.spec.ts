@@ -31,8 +31,15 @@ describe('Air information service [Integration-test]', () => {
   let pollutionModel: Model<Pollution>;
   let mockAxiosResponse;
   let module: TestingModule;
+  let uri: string;
+  let mongoConnection;
+  let redisClient;
 
   beforeAll(async () => {
+    redisClient = globalThis.__REDIS_CLIENT__;
+    uri = globalThis.__MONGOD_URI__;
+    mongoConnection = globalThis.__MONGOD_CONNECTION__;
+
     mockAxiosResponse = {
       data: {
         data: {
@@ -49,10 +56,6 @@ describe('Air information service [Integration-test]', () => {
       },
     };
     jest.spyOn(axios, 'get').mockResolvedValue(mockAxiosResponse);
-
-    const redisClient = globalThis.__REDIS_CLIENT__;
-    const uri = globalThis.__MONGOD_URI__;
-    const mongoConnection = globalThis.__MONGOD_CONNECTION__;
 
     pollutionModel = mongoConnection.model(Pollution.name, PollutionSchema);
 

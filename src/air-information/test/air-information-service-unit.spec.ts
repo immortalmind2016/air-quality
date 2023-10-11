@@ -3,12 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AirInformationService } from '../air-information-service';
-import {
-  AirInformationProvider,
-  GeoInformation,
-  PollutionInfo,
-  Queues,
-} from '../utils/types';
+import { GeoInformation, PollutionInfo, Queues } from '../utils/types';
 import {
   MongooseModule,
   getConnectionToken,
@@ -34,12 +29,12 @@ describe('Air information service [unit-tests]', () => {
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
   let module: TestingModule;
+  let uri: string;
 
   beforeAll(async () => {
-    redisClient = new IORedis();
-    mongod = await MongoMemoryServer.create();
-    const uri = mongod.getUri();
-    mongoConnection = (await connect(uri)).connection;
+    redisClient = globalThis.__REDIS_CLIENT__;
+    uri = globalThis.__MONGOD_URI__;
+    mongoConnection = globalThis.__MONGOD_CONNECTION__;
 
     module = await Test.createTestingModule({
       providers: [
@@ -82,10 +77,6 @@ describe('Air information service [unit-tests]', () => {
   });
 
   afterAll(async () => {
-    await mongoConnection.dropDatabase();
-    await mongoConnection.close();
-    await mongod.stop();
-
     const queue = module.get<Queue>(getQueueToken(Queues.AirInformationQueue));
     await queue.close();
 

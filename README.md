@@ -63,10 +63,6 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-If you are facing an issue regarding the test command try to run the following command:
-```bash
-$ yarn test --runInBand
-```
 It runs the test suits sequentially.
 
 ### We are using ioredis-mock to mock the redis client in our tests

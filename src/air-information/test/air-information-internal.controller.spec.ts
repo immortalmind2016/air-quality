@@ -15,10 +15,12 @@ import { Queue } from 'bull';
 describe('AirInformationInternalController', () => {
   let controller: AirInformationInternalController;
   let module: TestingModule;
+  let redisClient;
+  let uri: string;
 
   beforeAll(async () => {
-    const redisClient = globalThis.__REDIS_CLIENT__;
-    const uri = globalThis.__MONGOD_URI__;
+    redisClient = globalThis.__REDIS_CLIENT__;
+    uri = globalThis.__MONGOD_URI__;
 
     module = await Test.createTestingModule({
       controllers: [AirInformationInternalController],
