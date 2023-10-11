@@ -257,9 +257,10 @@ Ran all test suites.
 ## What next?
 - Add a discriminator field to the AirInformation entity in order to distinguish between different providers.
 - Add a new field to the pollution entity to store the provider name.
-- Create kubernetes deployment file for the application.
+- Create kubernetes deployment file for the application to orchestrate the application.
 - Adding hash for each docker image as a tag based on the git commit hash [useful in rollback].
 - End to end test to test our endpoints.
+- Using vault to store our secrets (e.g. API_KEY). [on production]
 
 
 
