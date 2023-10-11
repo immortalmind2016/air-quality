@@ -12,7 +12,7 @@ quality information” of a nearest city to GPS coordinates using iqair
 - The cronjob is responsible for fetching the air information from the external provider every 1 minute and store it in the database.
 
 
-![Alt text](https://i.ibb.co/kSPBtQx/image.png "cronjob flow")
+![Alt text](https://i.ibb.co/rZHtDW2/image.png "cronjob flow")
 
 
 check it on drowl.io: https://drive.google.com/file/d/1E8TPRBTn8VuTRyP0uevB9eljm7RvoQAC/view?usp=sharing
