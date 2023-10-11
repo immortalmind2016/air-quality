@@ -63,6 +63,12 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+If you are facing an issue regarding the test command try to run the following command:
+```bash
+$ yarn test --runInBand
+```
+It runs the test suits sequentially.
+
 ### We are using ioredis-mock to mock the redis client in our tests
 ### We are using mongodb-memory-server to mock the mongodb connection in our tests
 
@@ -253,7 +259,7 @@ Ran all test suites.
 - Add a new field to the pollution entity to store the provider name.
 - Create kubernetes deployment file for the application.
 - Adding hash for each docker image as a tag based on the git commit hash [useful in rollback].
-- Test our endpoints.
+- End to end test to test our endpoints.
 
 
 
