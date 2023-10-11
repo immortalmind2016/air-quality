@@ -11,7 +11,6 @@ import { Job, Queue } from 'bull';
 import { GeoInformation, Queues } from '../utils/types';
 import { AirInformationService } from '../air-information-service';
 import { Logger } from '@nestjs/common';
-import { GEO_INFO } from '../utils/constants';
 
 @Processor(Queues.AirInformationQueue)
 export class AirInfoQueueConsumer {
@@ -62,18 +61,6 @@ export class AirInfoQueueConsumer {
   @OnQueuePaused()
   async onPause() {
     this.logger.warn('Queue paused');
-    // every  30 minutes check the status of the provider
-
-    this.timer = setInterval(
-      async () => {
-        try {
-          this.logger.log('Checking the status of the provider');
-          await this.AirInfoService.getNearestCityPollution(GEO_INFO);
-          this.airInfoQueue.resume();
-        } catch (e) {}
-      },
-      2 * 60 * 1000,
-    );
   }
 
   @OnQueueResumed()

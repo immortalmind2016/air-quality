@@ -131,7 +131,7 @@ So You can create new air information provider by following these steps:
 ## Controllers
 #### We have 2 controllers:
 - AirInformationController: responsible for exposing the air information to the client/external consumer
-- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job) [ <b>NOT USED FOR NOW</b> ]
+- AirInformationInternalController: responsible for exposing our APIs internally (for example: cron job) [ <strong>NOT USED FOR NOW</strong> ]
 
 ## Data transfer objects (DTOs)
 #### We have 1 DTO: 
@@ -150,18 +150,20 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file 
 - To run the cron job directly, you can run the command ```yarn run:job```
 
-#### Checking the status of the air information provider every 30 minutes [INSIDE PAUSE EVENT HANDLER OF THE QUEUE]
-- It's something like a health check for the external provider to make sure that it's up and running
+#### Checking the last completed jobs done in within the last 30 minutes 
+- So we will check if there're completed jobs in the last 30 minutes 
+  - If no completed jobs, we will resume the queue, as it means we waited for 30 minutes, So process the jobs in the queue.
+  - If yes completed jobs, do nothing
 - implementation is close to circuit breaker pattern
 
 #### flow
 - The cron job will push a job to the queue every 1 minute.
 - The queue consumer will invoke the job and fetch the air information from the external provider.
-- If the external provider is up, the queue consumer will store the air information in the database.
-- If the external provider is down, the queue consumer will pause the queue.
-- We will check the status of the external provider every 30 minutes.
-  - If the external provider is up, we will resume the queue.
-  - If the external provider is down, we will keep the queue paused.
+- If the external provider is <strong>up</strong>, the queue consumer will store the air information in the database.
+- If the external provider is <strong>down</strong>, the queue consumer will pause the queue.
+- We will check if there're completed jobs in the last 30 minutes 
+  - If no completed jobs, we will resume the queue, as it means we waited for 30 minutes, So process the jobs in the queue.
+  - If yes completed jobs, do nothing
 
 
 ## Redis Queue
@@ -199,7 +201,7 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 
 ## Conventions
 #### Commits
-- We are using conventional commits to make our commits more readable and understandable [chore: your message ] prefix maybe <b>[feat,docs,chore,fix]</b> 
+- We are using conventional commits to make our commits more readable and understandable [chore: your message ] prefix maybe <strong>[feat,docs,chore,fix]</strong> 
 check it here: `.commitlintrc.json`
 #### Enum [PascalCase]
 
@@ -212,6 +214,15 @@ check it here: `.commitlintrc.json`
 ## Recommendations
 - Use kubernetes to deploy the cron job instead of using node-cron module.
 - Use docker to run the application.
+
+## Tricks
+- To test the cronjob in case of external api is down, you cann add this line 
+in your hosts file [windows] 
+`
+127.0.0.1 api.airvisual.com
+`
+So we are mocking the external api by our local machine [lookup for the hosts file in your OS]
+
 
 
 ## Test coverage

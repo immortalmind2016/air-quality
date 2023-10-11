@@ -36,6 +36,7 @@
     "bull": "^4.11.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "dayjs": "^1.11.10",
     "mongodb-memory-server": "^9.0.0",
     "mongoose": "^7.6.0",
     "mongoose-mock": "^0.4.0",
@@ -90,11 +91,9 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "globalSetup": "./test/setup.ts",
-    "globalTeardown":"./test/teardown.ts"
-    
+    "globalTeardown": "./test/teardown.ts"
   },
   "lint-staged": {
     "{src}/**/*.ts": "eslint --ext .ts,.tsx --fix"
   }
-
 }
