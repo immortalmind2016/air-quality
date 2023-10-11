@@ -23,7 +23,7 @@ export const isShouldResumeQueue = async (queue: Queue) => {
   // Case: 2
   // And the same for the cronjob that started after graceful shutdown in the previous cronjob.
 
-  //Check if there are any completed jobs that are newer than 2 minutes, if not
+  //Check if there are any completed jobs that are newer than 30 minutes, if not
   //So we can resume the queue
 
   const beforeThreshold = dayjs().subtract(30, 'minute').unix();

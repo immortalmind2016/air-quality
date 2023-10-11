@@ -44,7 +44,7 @@ export class AirInfoQueueConsumer {
     } catch (e) {
       if (e) {
         // If the provider is not available, we will pause the queue
-        // and we will check the status of the provider every 2 minutes using another cron job
+        // and we will check the status of the provider every 30 minutes using another cron job
         this.logger.warn(
           'The air info provider is not available, queue paused',
         );
