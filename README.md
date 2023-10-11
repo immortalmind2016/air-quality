@@ -15,7 +15,7 @@ quality information” of a nearest city to GPS coordinates using iqair
 ![Alt text](https://i.ibb.co/rZHtDW2/image.png "cronjob flow")
 
 
-check it on drowl.io: https://drive.google.com/file/d/1E8TPRBTn8VuTRyP0uevB9eljm7RvoQAC/view?usp=sharing
+check it on draw.io: https://drive.google.com/file/d/1E8TPRBTn8VuTRyP0uevB9eljm7RvoQAC/view?usp=sharing
 
 
 
