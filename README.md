@@ -52,7 +52,7 @@ $ yarn run start:prod
 
 ## Running the app using Docker and Kubernetes
 - We have created a docker file to containerize our application
-- using command ```docker-compose -up d``` to build the image
+- using command ```docker-compose up -d``` to build the image
 - Applying kubernetes deployment file ```yarn k8s:apply``` [Optional] [To run the cron job in kubernetes]
 
 
@@ -156,9 +156,9 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - You can change the cron job schedule in the ```./src/air-information/jobs/get-air-info.ts``` file 
 - To run the cron job directly, you can run the command ```yarn run:job```
 
-#### Checking the last completed jobs done in within the last 30 minutes 
-- So we will check if there're completed jobs in the last 30 minutes 
-  - If no failed jobs, we will resume the queue, as it means we waited for 30 minutes, So the external provider may be available now..
+#### Checking the last failed jobs done in within the last 30 minutes 
+- So we will check if there're failed jobs in the last 30 minutes 
+  - If no failed jobs, we will resume the queue, as it means we waited for 30 minutes, So the external provider may be available now.
 - implementation is close to circuit breaker pattern
 
 #### flow
@@ -166,7 +166,7 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - The queue consumer will invoke the job and fetch the air information from the external provider.
 - If the external provider is <strong>up</strong>, the queue consumer will store the air information in the database.
 - If the external provider is <strong>down</strong>, the queue consumer will pause the queue.
-- We will check if there're completed jobs in the last 30 minutes 
+- We will check if there're failed jobs in the last 30 minutes 
   - If no failed jobs, we will resume the queue, as it means we waited for 30 minutes, So the external provider may be available now.
 
 
@@ -175,14 +175,14 @@ To run the cron jobs we have in kubernetes, you can run the command ```yarn k8s:
 - We have created a queue called ```air-information-queue``` to handle the cron jobs
 ### How we are using the queue.
 - Our cron job will push a job to the queue every 1 minute.
-- The queue consumer will invoke the job and fetch the air information from the external provider.
+- The queue consumer process the job and fetch the air information from the external provider.
 
 ## Kubernetes
 #### we are using kubernetes to deploy our cron job
 - We have created a cron job in kubernetes to invoke the script ```/src/air-information/jobs/get-air-info-v2.ts``` every 1 minute
 #### How to run the cron job in kubernetes
 - First, you need to deploy the docker image to the registry using ```yarn docker:deploy```
-- Then, Use ```yarn k8s:apply``` [Using yarn script]
+- Then, Use ```yarn k8s:apply```
 
 ### Deployments
 - inside the `deployments` folder
@@ -220,7 +220,7 @@ check it here: `.commitlintrc.json`
 - Use docker to run the application.
 
 ## Tricks
-- To test the cronjob in case of external api is down, you cann add this line 
+- To test the cronjob in case of external api is down, you can add this line 
 in your hosts file [windows] 
 `
 127.0.0.1 api.airvisual.com
