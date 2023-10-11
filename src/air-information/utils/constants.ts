@@ -1,5 +1,5 @@
 // paris zone geo info
 export const GEO_INFO = {
-  lat: 31.00192,
-  lon: 30.78847,
+  lat: 48.856613,
+  lon: 2.352222,
 };
